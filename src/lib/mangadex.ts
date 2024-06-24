@@ -11,31 +11,21 @@ export const headers = {
   "Content-Type": "application/json",
 };
 
-export const getTrendingManga = async (page = 1) => {
-  try {
-    const queryParams = new URLSearchParams({
-      limit: limitList.toString(),
-      offset: ((page - 1) * limitList).toString(),
-      "order[followedCount]": "desc",
-    });
+export async function getTrendingManga(page = 1) {
+  const response = await fetch(`/api/getTrendingManga?page=${page}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const response = await fetch(`${BASE_URL}/manga?${queryParams}`, {
-      method: "GET",
-      headers: headers,
-      next: { revalidate: 1209600 }, // Caches the response for 2 weeks
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error fetching trending manga:", error);
-    return [];
+  if (!response.ok) {
+    throw new Error("Failed to fetch trending manga");
   }
-};
+
+  const data = await response.json();
+  console.log(data); // Process fetched data
+}
 
 export const getManga = async (id: string) => {
   try {
@@ -57,31 +47,21 @@ export const getManga = async (id: string) => {
   }
 };
 
-export const getNewReleases = async (page = 1) => {
-  try {
-    const queryParams = new URLSearchParams({
-      limit: limitList.toString(),
-      offset: ((page - 1) * limitList).toString(),
-      "order[latestUploadedChapter]": "desc",
-    });
+export async function getNewReleases(page = 1) {
+  const response = await fetch(`/api/getNewReleases?page=${page}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    const response = await fetch(`${BASE_URL}/manga?${queryParams}`, {
-      method: "GET",
-      headers: headers,
-      next: { revalidate: 1209600 }, // Caches the response for 2 weeks
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error fetching trending manga:", error);
-    return [];
+  if (!response.ok) {
+    throw new Error("Failed to fetch new releases manga");
   }
-};
+
+  const data = await response.json();
+  console.log(data); // Process fetched data
+}
 
 export const getCoverArt = async (coverArtId: string) => {
   try {
