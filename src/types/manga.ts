@@ -4,13 +4,29 @@ export type IMangaCard = {
     title: {
       en: string;
     };
+    description: {
+      en: string;
+    };
+    createdAt: string;
+    contentRating: "safe" | "suggestive" | "erotica" | "pornographic";
     lastChapter: string;
     updatedAt: string;
     year: number;
+    status: "ongoing" | "completed" | "hiatus";
   };
   latestChapter: string;
   relationships: {
     id: string;
     type: string;
   }[];
+};
+
+export type IRelationship = {
+  id: string;
+  type: string;
+}[];
+
+export type IChapters = {
+  attributes: { chapter: string };
+  id: string;
 };

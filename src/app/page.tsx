@@ -1,13 +1,13 @@
-"use client";
+import MangaList from "@/components/MangaList";
+import { cookies } from "next/headers";
 
-import Trending from "@/components/Trending";
-import { getTrendingManga } from "@/lib/mangadex";
-
-const Home = async () => {
-  const trendingManga = await getTrendingManga();
+const Home = () => {
+  cookies();
   return (
-    <main className=" w-full min-h-screen flex items-center justify-center">
-      <Trending />
+    <main className=" w-full min-h-screen flex gap-5 flex-col px-1.5 lg:px-5 ">
+      <MangaList type="trending" />
+      <MangaList type="new releases" />
+      {/* <TestingQuery /> */}
     </main>
   );
 };
