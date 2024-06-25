@@ -25,8 +25,8 @@ const MangaCard = ({
       getCoverArt(coverArt).then(async (data: any) => {
         const blob = await data.blob();
         const url = URL.createObjectURL(blob);
-        console.log(data);
-        setImageUrl(data.url);
+        console.log(url);
+        setImageUrl(url);
       });
     };
   }, [coverArt]);
