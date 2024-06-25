@@ -1,20 +1,41 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  // try {
-  //   // const response = await fetch(
-  //   //   `${BASE_URL}/manga/5f20aded-1216-41e3-b48d-87b0c4d9957c}`
-  //   // );
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const limit = searchParams.get("limit") || "10";
+  const offset = searchParams.get("offset") || "0";
+  const order = searchParams.get("order[createdAt]") || "desc";
 
-  //   // if (!response.ok) {
-  //   //   throw new Error("Network response was not ok");
-  //   // }
+  try {
+    const fetchedData = await fetch(
+      `https://api.mangadex.org/manga?limit=${limit}&offset=${offset}&order[createdAt]=${order}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  //   // const data = await response.json();
-  //   return NextResponse.json({ message: "Data fetched successfully" });
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  //   return NextResponse.json({ message: "Error fetching data" });
-  // }
-  NextResponse.json({ message: "Data fetched successfully" });
+    if (!fetchedData.ok) {
+      return NextResponse.json({
+        status: "error",
+        message: "Error fetching data",
+      });
+    }
+
+    const data = await fetchedData.json();
+
+    return NextResponse.json({
+      status: "success",
+      message: "Data fetched successfully",
+      data,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      status: "error",
+      message: "Error fetching data",
+      data: error.message,
+    });
+  }
 }

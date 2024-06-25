@@ -15,32 +15,35 @@ export async function GET(request: Request) {
 
   if (!limit || !offset || !order) return;
 
-  const queryParams = new URLSearchParams({
-    limit,
-    offset,
-    order,
-  });
+  try {
+    const queryParams = new URLSearchParams({
+      limit,
+      offset,
+      order,
+    });
+    const response = await fetch(`${BASE_URL}/manga?${queryParams}`, {
+      method: "GET",
+    });
 
-  const response = await fetch(`${BASE_URL}/manga?${queryParams}`, {
-    method: "GET",
-  });
+    if (!response.ok) {
+      return NextResponse.json(
+        responseToClient({
+          data: undefined,
+          status: "error",
+          message: "Error fetching data",
+        })
+      );
+    }
 
-  if (!response.ok) {
+    const data = await response.json();
     return NextResponse.json(
       responseToClient({
-        data: undefined,
-        status: "error",
-        message: "Error fetching data",
+        data,
+        status: "success",
+        message: "Successfully fetched data",
       })
     );
+  } catch (error) {
+    NextResponse.json({ message: "Error fetching data" });
   }
-
-  const data = await response.json();
-  return NextResponse.json(
-    responseToClient({
-      data,
-      status: "success",
-      message: "Successfully fetched data",
-    })
-  );
 }

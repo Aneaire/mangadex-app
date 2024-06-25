@@ -218,3 +218,29 @@ export const getChapterPanels = async (chapterId: string) => {
 //     return [];
 //   }
 // };
+
+// ==============================================================================
+
+export const testApiCall = async () => {
+  try {
+    const response = await fetch(
+      `/api/test?limit=10&offset=0&order[createdAt]=desc`,
+      {
+        method: "GET",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        `Network response was not ok, status: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
