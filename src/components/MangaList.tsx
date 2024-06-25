@@ -5,12 +5,6 @@ import { IMangaCard, IResponseToClient, ITypeList } from "@/types/manga";
 import { useEffect, useMemo, useState } from "react";
 import MapToList from "./MapToList";
 import NoDataPlaceholder from "./common/NoDataPlaceholder";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselNext,
-  CarouselPrevious,
-} from "./ui/carousel";
 
 const MangaList = ({ type }: { type: ITypeList }) => {
   const [mangaList, setMangaList] = useState<IMangaCard[]>([]);
@@ -41,15 +35,7 @@ const MangaList = ({ type }: { type: ITypeList }) => {
   return (
     <div className="  py-1 relative">
       <h5 className=" font-medium font-montserrat pb-2">{heading}</h5>
-      {fetchResult === "success" && (
-        <Carousel opts={{ align: "start" }}>
-          <CarouselContent className="-ml-4">
-            <MapToList mangaList={mangaList} />
-          </CarouselContent>
-          <CarouselPrevious className="  hidden lg:flex" />
-          <CarouselNext className=" hidden lg:flex" />
-        </Carousel>
-      )}
+      {fetchResult === "success" && <MapToList mangaList={mangaList} />}
       {fetchResult === "error" && <NoDataPlaceholder />}
       <div className=" py-[1px] w-full bg-white/20 mt-5" />
     </div>

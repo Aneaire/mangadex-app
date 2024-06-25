@@ -33,7 +33,7 @@ const MangaCard = ({
 
   return (
     <div
-      onClick={() => router.push(`/manga/${id}`)}
+      // onClick={() => router.push(`/manga/${id}`)}
       className="bg-card text-foreground rounded w-32 font-poppins"
     >
       <div className="relative w-32 aspect-[9/12] rounded overflow-hidden">
@@ -57,6 +57,7 @@ const MangaCard = ({
           CH : {chapters && chapters.length > 0 ? chapters : "N/A"}
         </p>
       </div>
+      <p>{imageUrl}</p>
     </div>
   );
 };
