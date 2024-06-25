@@ -1,9 +1,10 @@
 "use client";
 
-import { getNewReleases, getTrendingManga } from "@/lib/mangadex";
-import { IMangaCard } from "@/types/manga";
+import { fetchMangaList } from "@/lib/mangadex";
+import { IMangaCard, IResponseToClient, ITypeList } from "@/types/manga";
 import { useEffect, useMemo, useState } from "react";
 import MapToList from "./MapToList";
+import NoDataPlaceholder from "./common/NoDataPlaceholder";
 import {
   Carousel,
   CarouselContent,
@@ -11,9 +12,10 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 
-const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
+const MangaList = ({ type }: { type: ITypeList }) => {
   const [mangaList, setMangaList] = useState<IMangaCard[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [fetchResult, setFetchResult] = useState<IResponseToClient["status"]>();
 
   const heading =
     type === "trending"
@@ -22,24 +24,14 @@ const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
 
   const getMangaList = useMemo(() => {
     return async (): Promise<void> => {
-      if (type === "trending") {
-        await getTrendingManga(page).then((data: any) => {
-          const newData = data.filter((manga: IMangaCard) => {
-            return !mangaList.some((m) => m.id === manga.id);
-          });
-          setMangaList(newData);
-          setPage((prev) => prev + 1);
+      await fetchMangaList(page, type).then((data: IResponseToClient) => {
+        const newData = data.data.filter((manga: IMangaCard) => {
+          return !mangaList.some((m) => m.id === manga.id);
         });
-      }
-      if (type === "new releases") {
-        await getNewReleases(page).then((data: any) => {
-          const newData = data.filter((manga: IMangaCard) => {
-            return !mangaList.some((m) => m.id === manga.id);
-          });
-          setMangaList(newData);
-          setPage((prev) => prev + 1);
-        });
-      }
+        setFetchResult(data.status);
+        setMangaList(newData);
+        setPage((prev) => prev + 1);
+      });
     };
   }, [type]);
 
@@ -49,13 +41,16 @@ const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
   return (
     <div className="  py-1 relative">
       <h5 className=" font-medium font-montserrat pb-2">{heading}</h5>
-      <Carousel opts={{ align: "start" }}>
-        <CarouselContent className="-ml-4">
-          <MapToList mangaList={mangaList} />
-        </CarouselContent>
-        <CarouselPrevious className="  hidden lg:flex" />
-        <CarouselNext className=" hidden lg:flex" />
-      </Carousel>
+      {fetchResult === "success" && (
+        <Carousel opts={{ align: "start" }}>
+          <CarouselContent className="-ml-4">
+            <MapToList mangaList={mangaList} />
+          </CarouselContent>
+          <CarouselPrevious className="  hidden lg:flex" />
+          <CarouselNext className=" hidden lg:flex" />
+        </Carousel>
+      )}
+      {fetchResult === "error" && <NoDataPlaceholder />}
       <div className=" py-[1px] w-full bg-white/20 mt-5" />
     </div>
   );

@@ -1,4 +1,7 @@
-const MANGA_BASE_URL = "https://api.mangadex.org";
+import { ITypeList } from "@/types/manga";
+
+const MANGA_BASE_URL = "api/manga";
+// const MANGA_BASE_URL = "https://api.mangadex.org";
 const COVER_ART_BASE_URL = "https://uploads.mangadex.org/covers";
 
 export const limitList: number = 2;
@@ -29,16 +32,17 @@ export const getManga = async (id: string) => {
   }
 };
 
-export const getTrendingManga = async (page = 1) => {
+export const fetchMangaList = async (page = 1, listType: ITypeList) => {
   try {
     const limitList = 10;
     const queryParams = new URLSearchParams({
       limit: limitList.toString(),
       offset: ((page - 1) * limitList).toString(),
-      "order[followedCount]": "desc",
+      order: "desc",
+      listType,
     });
 
-    const response = await fetch(`${MANGA_BASE_URL}/manga?${queryParams}`, {
+    const response = await fetch(`${MANGA_BASE_URL}?${queryParams}`, {
       method: "GET",
     });
 
@@ -47,33 +51,8 @@ export const getTrendingManga = async (page = 1) => {
     }
 
     const data = await response.json();
-    return data.data;
-  } catch (error) {
-    console.error("Error fetching trending manga:", error);
-    return [];
-  }
-};
-
-export const getNewReleases = async (page = 1) => {
-  try {
-    const queryParams = new URLSearchParams({
-      limit: limitList.toString(),
-      offset: ((page - 1) * limitList).toString(),
-      "order[latestUploadedChapter]": "desc",
-    });
-
-    const response = await fetch(`${MANGA_BASE_URL}/manga?${queryParams}`, {
-      method: "GET",
-      headers: headers,
-      next: { revalidate: 1209600 }, // Caches the response for 2 weeks
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    return data.data;
+    console.log(data);
+    return data;
   } catch (error) {
     console.error("Error fetching trending manga:", error);
     return [];
@@ -82,10 +61,13 @@ export const getNewReleases = async (page = 1) => {
 
 export const getCoverArt = async (coverArtId: string) => {
   try {
-    const response = await fetch(`${MANGA_BASE_URL}/cover/${coverArtId}`, {
-      method: "GET",
-      headers: headers,
-    });
+    const response = await fetch(
+      `https://api.mangadex.org/cover/${coverArtId}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -221,26 +203,29 @@ export const getChapterPanels = async (chapterId: string) => {
 
 // ==============================================================================
 
-export const testApiCall = async () => {
+export const testApiCall = async (page = 1) => {
   try {
-    const response = await fetch(
-      `/api/test?limit=10&offset=0&order[createdAt]=desc`,
-      {
-        method: "GET",
-      }
-    );
+    const limitList = 10;
+    const queryParams = new URLSearchParams({
+      limit: limitList.toString(),
+      offset: ((page - 1) * limitList).toString(),
+      "order[createdAt]": "desc",
+    });
+
+    const response = await fetch(`${MANGA_BASE_URL}?${queryParams}`, {
+      method: "GET",
+    });
 
     if (!response.ok) {
-      throw new Error(
-        `Network response was not ok, status: ${response.status}`
-      );
+      throw new Error("Network response was not ok");
     }
 
     const data = await response.json();
     console.log(data);
-    return data;
+
+    return data.data;
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching trending manga:", error);
     return [];
   }
 };

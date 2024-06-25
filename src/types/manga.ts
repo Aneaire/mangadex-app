@@ -36,3 +36,5 @@ export type IResponseToClient = {
   data: any | undefined;
   message: "Successfully fetched data" | "Error fetching data";
 };
+
+export type ITypeList = "trending" | "new releases";
