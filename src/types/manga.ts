@@ -30,3 +30,9 @@ export type IChapters = {
   attributes: { chapter: string };
   id: string;
 };
+
+export type IResponseToClient = {
+  status: "success" | "error";
+  data: any | undefined;
+  message: "Successfully fetched data" | "Error fetching data";
+};

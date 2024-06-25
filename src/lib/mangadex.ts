@@ -1,4 +1,4 @@
-const MANGA_BASE_URL = "/api/manga";
+const MANGA_BASE_URL = "https://api.mangadex.org";
 const COVER_ART_BASE_URL = "https://uploads.mangadex.org/covers";
 
 export const limitList: number = 2;

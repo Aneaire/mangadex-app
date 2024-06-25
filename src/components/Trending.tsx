@@ -17,7 +17,6 @@ const Trending = () => {
     });
   };
 
-  console.log(trendingManga);
   return (
     <div className=" w-full flex flex-col items-center justify-center">
       <Button onClick={() => fetchManga()}>Next Page</Button>

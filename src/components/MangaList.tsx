@@ -46,7 +46,6 @@ const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
   useEffect(() => {
     getMangaList();
   }, [type]);
-  console.log(mangaList);
   return (
     <div className="  py-1 relative">
       <h5 className=" font-medium font-montserrat pb-2">{heading}</h5>
