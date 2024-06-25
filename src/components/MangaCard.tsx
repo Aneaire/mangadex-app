@@ -18,7 +18,6 @@ const MangaCard = ({
   id: string;
 }) => {
   const router = useRouter();
-
   const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {

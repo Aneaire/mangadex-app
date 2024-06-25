@@ -1,9 +1,7 @@
-import axios from "axios";
-
-const BASE_URL = "https://api.mangadex.org";
+const MANGA_BASE_URL = "/api/manga";
 const COVER_ART_BASE_URL = "https://uploads.mangadex.org/covers";
 
-export const limitList: number = 10;
+export const limitList: number = 2;
 export const chapterLimitList: number = 40;
 
 export const headers = {
@@ -11,25 +9,9 @@ export const headers = {
   "Content-Type": "application/json",
 };
 
-export async function getTrendingManga(page = 1) {
-  const response = await fetch(`/api/getTrendingManga?page=${page}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch trending manga");
-  }
-
-  const data = await response.json();
-  console.log(data); // Process fetched data
-}
-
 export const getManga = async (id: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/manga/${id}`, {
+    const response = await fetch(`${MANGA_BASE_URL}/manga/${id}`, {
       method: "GET",
       headers: headers,
       next: { revalidate: 172800 }, // Caches the response for 2 days
@@ -47,26 +29,70 @@ export const getManga = async (id: string) => {
   }
 };
 
-export async function getNewReleases(page = 1) {
-  const response = await fetch(`/api/getNewReleases?page=${page}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+export const getTrendingManga = async (page = 1) => {
+  try {
+    const limitList = 10;
+    const queryParams = new URLSearchParams({
+      limit: limitList.toString(),
+      offset: ((page - 1) * limitList).toString(),
+      "order[followedCount]": "desc",
+    });
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch new releases manga");
+    const response = await fetch(`${MANGA_BASE_URL}/manga?${queryParams}`, {
+      method: "GET",
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching trending manga:", error);
+    return [];
   }
+};
 
-  const data = await response.json();
-  console.log(data); // Process fetched data
-}
+export const getNewReleases = async (page = 1) => {
+  try {
+    const queryParams = new URLSearchParams({
+      limit: limitList.toString(),
+      offset: ((page - 1) * limitList).toString(),
+      "order[latestUploadedChapter]": "desc",
+    });
+
+    const response = await fetch(`${MANGA_BASE_URL}/manga?${queryParams}`, {
+      method: "GET",
+      headers: headers,
+      next: { revalidate: 1209600 }, // Caches the response for 2 weeks
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data.data;
+  } catch (error) {
+    console.error("Error fetching trending manga:", error);
+    return [];
+  }
+};
 
 export const getCoverArt = async (coverArtId: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/cover/${coverArtId}`);
-    const coverArt = response.data.data;
+    const response = await fetch(`${MANGA_BASE_URL}/cover/${coverArtId}`, {
+      method: "GET",
+      headers: headers,
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    const coverArt = data.data;
 
     if (coverArt && coverArt.attributes && coverArt.attributes.fileName) {
       const fileName = coverArt.attributes.fileName;

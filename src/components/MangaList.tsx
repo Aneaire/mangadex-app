@@ -21,9 +21,9 @@ const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
       : "New Releases";
 
   const getMangaList = useMemo(() => {
-    return (): void => {
+    return async (): Promise<void> => {
       if (type === "trending") {
-        getTrendingManga(page).then((data: any) => {
+        await getTrendingManga(page).then((data: any) => {
           const newData = data.filter((manga: IMangaCard) => {
             return !mangaList.some((m) => m.id === manga.id);
           });
@@ -32,7 +32,7 @@ const MangaList = ({ type }: { type: "trending" | "new releases" }) => {
         });
       }
       if (type === "new releases") {
-        getNewReleases(page).then((data: any) => {
+        await getNewReleases(page).then((data: any) => {
           const newData = data.filter((manga: IMangaCard) => {
             return !mangaList.some((m) => m.id === manga.id);
           });
