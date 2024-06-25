@@ -19,6 +19,7 @@ const MangaCard = ({
 }) => {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl2, setImageUrl2] = useState("");
 
   useEffect(() => {
     return () => {
@@ -27,6 +28,7 @@ const MangaCard = ({
         const url = URL.createObjectURL(blob);
         console.log(url);
         setImageUrl(url);
+        setImageUrl2(data.url);
       });
     };
   }, [coverArt]);
@@ -41,7 +43,7 @@ const MangaCard = ({
           <Image
             quality={50}
             sizes="200px"
-            src={imageUrl}
+            src={imageUrl2}
             alt="Manga"
             priority
             className=" w-full h-full object-cover"
@@ -58,6 +60,7 @@ const MangaCard = ({
         </p>
       </div>
       <p>{imageUrl}</p>
+      <p>{imageUrl2}</p>
     </div>
   );
 };
