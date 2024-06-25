@@ -22,9 +22,11 @@ const MangaCard = ({
 
   useEffect(() => {
     return () => {
-      getCoverArt(coverArt).then((data: any) => {
-        setImageUrl(data.data);
-        console.log(data);
+      getCoverArt(coverArt).then(async (data: any) => {
+        const blob = await data.blob();
+        const url = URL.createObjectURL(blob);
+        setImageUrl(url);
+        console.log(url);
       });
     };
   }, [coverArt]);

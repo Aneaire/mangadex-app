@@ -1,4 +1,3 @@
-import { responseToClient } from "@/lib/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -38,41 +37,33 @@ export async function GET(request: Request) {
       ).id;
       const imageUrl = `https://uploads.mangadex.org/covers/${mangaId}/${fileName}`;
 
-      // try {
-      //   const imageResponse = await fetch(imageUrl);
+      try {
+        const imageResponse = await fetch(imageUrl);
 
-      //   if (!imageResponse.ok) {
-      //     return NextResponse.json({
-      //       status: "error",
-      //       message: "Error fetching image",
-      //     });
-      //   }
+        if (!imageResponse.ok) {
+          return NextResponse.json({
+            status: "error",
+            message: "Error fetching image",
+          });
+        }
 
-      //   const imageBuffer = await imageResponse.arrayBuffer();
+        const imageBuffer = await imageResponse.arrayBuffer();
 
-      //   return new NextResponse(imageBuffer, {
-      //     status: 200,
-      //     headers: {
-      //       "Content-Type":
-      //         imageResponse.headers.get("Content-Type") || "image/jpeg",
-      //       "Cache-Control": "public, max-age=86400", // Cache for 1 day
-      //     },
-      //   });
-      // } catch (error: any) {
-      //   return NextResponse.json({
-      //     status: "error",
-      //     message: "Error fetching image data",
-      //     data: error.message,
-      //   });
-      // }
-      console.log(imageUrl);
-      return NextResponse.json(
-        responseToClient({
-          data: imageUrl,
-          status: "success",
-          message: "Successfully fetched data",
-        })
-      );
+        return new NextResponse(imageBuffer, {
+          status: 200,
+          headers: {
+            "Content-Type":
+              imageResponse.headers.get("Content-Type") || "image/jpeg",
+            "Cache-Control": "public, max-age=86400", // Cache for 1 day
+          },
+        });
+      } catch (error: any) {
+        return NextResponse.json({
+          status: "error",
+          message: "Error fetching image data",
+          data: error.message,
+        });
+      }
     } else {
       return NextResponse.json({
         status: "error",

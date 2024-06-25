@@ -74,9 +74,7 @@ export const getCoverArt = async (coverArtId: string) => {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
-    console.log(data);
-    return data;
+    return response;
   } catch (error) {
     console.error("Error fetching cover art details:", error);
     return null;
