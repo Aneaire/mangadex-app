@@ -133,7 +133,7 @@ export const getAllMangaChapters = async (
       "translatedLanguage[]": "en",
     });
 
-    const response = await fetch(`${BASE_URL}/chapter?${queryParams}`, {
+    const response = await fetch(`${MANGA_BASE_URL}/chapter?${queryParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -160,13 +160,16 @@ export const getAllMangaChapters = async (
 
 export const getChapterPanels = async (chapterId: string) => {
   try {
-    const response = await fetch(`${BASE_URL}/at-home/server/${chapterId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      next: { revalidate: 600 }, // Cache for 10 minutes
-    });
+    const response = await fetch(
+      `${MANGA_BASE_URL}/at-home/server/${chapterId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: { revalidate: 600 }, // Cache for 10 minutes
+      }
+    );
 
     const data = await response.json();
 
