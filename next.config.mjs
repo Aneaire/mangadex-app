@@ -5,6 +5,9 @@ const nextConfig = {
       "i.pinimg.com",
       "uploads.mangadex.org",
       "cmdxd98sb0x3yprd.mangadex.network",
+      "localhost",
+      "noonu-57jgcrfry-angelos-projects-45570967.vercel.app",
+      "noonu-57jgcrfry-angelos-projects-45570967",
     ],
   },
   //   async rewrites() {
