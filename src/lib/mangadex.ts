@@ -36,7 +36,6 @@ export const getManga = async (id: string) => {
 
 export const fetchMangaList = async (page = 1, listType: ITypeList) => {
   try {
-    const limitList = 10;
     const queryParams = new URLSearchParams({
       limit: limitList.toString(),
       offset: ((page - 1) * limitList).toString(),
@@ -53,7 +52,7 @@ export const fetchMangaList = async (page = 1, listType: ITypeList) => {
     }
 
     const data = await response.json();
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error("Error fetching trending manga:", error);
@@ -76,19 +75,8 @@ export const getCoverArt = async (coverArtId: string) => {
     }
 
     const data = await response.json();
-    const coverArt = data.data;
-
-    if (coverArt && coverArt.attributes && coverArt.attributes.fileName) {
-      const fileName = coverArt.attributes.fileName;
-      const mangaId = coverArt.relationships.find(
-        (rel: any) => rel.type === "manga"
-      ).id;
-      const imageUrl = `${COVER_ART_BASE_URL}/${mangaId}/${fileName}`;
-      return imageUrl;
-    } else {
-      console.error("Cover art filename not found");
-      return null;
-    }
+    console.log(data);
+    return data;
   } catch (error) {
     console.error("Error fetching cover art details:", error);
     return null;

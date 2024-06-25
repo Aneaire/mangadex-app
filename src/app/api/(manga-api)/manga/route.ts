@@ -5,17 +5,14 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const BASE_URL = process.env.MANGADEX_BASE_URL;
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") || "10";
-  const offset = searchParams.get("offset") || "0";
+  const limit = searchParams.get("limit");
+  const offset = searchParams.get("offset");
   const order = searchParams.get("order") || "desc";
   const listType: ITypeList | string =
     searchParams.get("listType") || "trending";
 
   try {
-    const queryParams = new URLSearchParams({
-      limit,
-      offset,
-    });
+    const queryParams = new URLSearchParams({});
 
     if (listType == "trending") {
       queryParams.append("order[followedCount]", order);
@@ -26,12 +23,15 @@ export async function GET(request: Request) {
       queryParams.append("order[latestUploadedChapter]", "desc");
     }
 
-    const fetchedData = await fetch(`${BASE_URL}/manga?${queryParams}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const fetchedData = await fetch(
+      `${BASE_URL}/manga?${queryParams}&limit=${limit}&offset=${offset}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!fetchedData.ok) {
       return NextResponse.json({

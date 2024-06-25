@@ -23,7 +23,8 @@ const MangaCard = ({
   useEffect(() => {
     return () => {
       getCoverArt(coverArt).then((data: any) => {
-        setImageUrl(data);
+        setImageUrl(data.data);
+        console.log(data);
       });
     };
   }, [coverArt]);
