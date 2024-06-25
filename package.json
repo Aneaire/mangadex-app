@@ -17,7 +17,6 @@
     "cookies-next": "^4.2.1",
     "embla-carousel-react": "^8.1.5",
     "flatlist-react": "^1.5.14",
-    "proxy": "http://localhost:3000",
     "lucide-react": "^0.396.0",
     "next": "14.2.4",
     "node-fetch": "^3.3.2",

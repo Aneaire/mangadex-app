@@ -1,10 +1,11 @@
+import { responseToClient } from "@/lib/server";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") || "10";
-  const offset = searchParams.get("offset") || "0";
-  const order = searchParams.get("order[createdAt]") || "desc";
+  const limit = searchParams.get("limit");
+  const offset = searchParams.get("offset");
+  const order = searchParams.get("order[createdAt]");
 
   try {
     const fetchedData = await fetch(
@@ -26,16 +27,20 @@ export async function GET(request: Request) {
 
     const data = await fetchedData.json();
 
-    return NextResponse.json({
-      status: "success",
-      message: "Data fetched successfully",
-      data,
-    });
-  } catch (error) {
-    return NextResponse.json({
-      status: "error",
-      message: "Error fetching data",
-      data: error.message,
-    });
+    return NextResponse.json(
+      responseToClient({
+        data: data.data,
+        status: "success",
+        message: "Successfully fetched data",
+      })
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      responseToClient({
+        status: "error",
+        message: "Error fetching data",
+        data: error.message,
+      })
+    );
   }
 }

@@ -1,49 +1,42 @@
-import { responseToClient } from "@/lib/server";
 import { NextResponse } from "next/server";
 
-type ResponseData = {
-  message: string;
-};
-
-const BASE_URL = "https://mangadex.org";
-
 export async function GET(request: Request) {
+  const BASE_URL = process.env.MANGADEX_BASE_URL;
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit");
-  const offset = searchParams.get("offset");
-  const order = searchParams.get("order[followedCount]");
-
-  if (!limit || !offset || !order) return;
+  const limit = searchParams.get("limit") || "10";
+  const offset = searchParams.get("offset") || "0";
+  const order = searchParams.get("order[createdAt]") || "desc";
 
   try {
-    const queryParams = new URLSearchParams({
-      limit,
-      offset,
-      order,
-    });
-    const response = await fetch(`${BASE_URL}/manga?${queryParams}`, {
-      method: "GET",
-    });
+    const fetchedData = await fetch(
+      `${BASE_URL}/manga?limit=${limit}&offset=${offset}&order[createdAt]=${order}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    if (!response.ok) {
-      return NextResponse.json(
-        responseToClient({
-          data: undefined,
-          status: "error",
-          message: "Error fetching data",
-        })
-      );
+    if (!fetchedData.ok) {
+      return NextResponse.json({
+        status: "error",
+        message: "Error fetching data",
+      });
     }
 
-    const data = await response.json();
-    return NextResponse.json(
-      responseToClient({
-        data,
-        status: "success",
-        message: "Successfully fetched data",
-      })
-    );
-  } catch (error) {
-    NextResponse.json({ message: "Error fetching data" });
+    const data = await fetchedData.json();
+
+    return NextResponse.json({
+      status: "success",
+      message: "Data fetched successfully",
+      data,
+    });
+  } catch (error: any) {
+    return NextResponse.json({
+      status: "error",
+      message: "Error fetching data",
+      data: error.message,
+    });
   }
 }
