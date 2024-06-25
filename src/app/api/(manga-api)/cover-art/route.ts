@@ -4,19 +4,10 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const BASE_URL = process.env.MANGADEX_COVER_ART_BASE_URL;
   const { searchParams } = new URL(request.url);
-  const limit = searchParams.get("limit") || "10";
-  const offset = searchParams.get("offset") || "0";
-  const order = searchParams.get("order") || "desc";
+  const coverArtId = searchParams.get("coverArtId");
 
   try {
-    const queryParams = new URLSearchParams({
-      limit,
-      offset,
-      "order[followedCount]": order,
-      "order[updatedAt]": order,
-    });
-
-    const fetchedData = await fetch(`${BASE_URL}?${queryParams}`, {
+    const fetchedData = await fetch(`${BASE_URL}/${coverArtId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -24,10 +15,13 @@ export async function GET(request: Request) {
     });
 
     if (!fetchedData.ok) {
-      return NextResponse.json({
-        status: "error",
-        message: "Error fetching data",
-      });
+      return NextResponse.json(
+        responseToClient({
+          status: "error",
+          message: "Error fetching data",
+          data: undefined,
+        })
+      );
     }
 
     const data = await fetchedData.json();
