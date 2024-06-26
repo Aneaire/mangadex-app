@@ -62,19 +62,24 @@ export const fetchMangaList = async (page = 1, listType: ITypeList) => {
 
 export const getCoverArt = async (coverArtId: string) => {
   try {
-    const response = await fetch(
-      `${coverArtEndpoint}?coverArtId=${coverArtId}`,
-      {
-        method: "GET",
-        headers: headers,
-      }
-    );
+    const response = await fetch(`/api/proxy/covers/${coverArtId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      console.error("Error fetching image:", response.statusText);
+      return null;
     }
 
-    return response;
+    const imageBuffer = await response.arrayBuffer();
+    const base64Image = `data:image/jpeg;base64,${Buffer.from(
+      imageBuffer
+    ).toString("base64")}`;
+    console.log(base64Image);
+    return base64Image;
   } catch (error) {
     console.error("Error fetching cover art details:", error);
     return null;

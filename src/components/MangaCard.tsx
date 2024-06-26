@@ -19,18 +19,15 @@ const MangaCard = ({
 }) => {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
-  const [imageUrl2, setImageUrl2] = useState("");
+
+  const fetchCoverArts = async () => {
+    getCoverArt(coverArt).then(async (data: any) => {
+      console.log(data);
+    });
+  };
 
   useEffect(() => {
-    return () => {
-      getCoverArt(coverArt).then(async (data: any) => {
-        const blob = await data.blob();
-        const url = URL.createObjectURL(blob);
-        console.log(url);
-        setImageUrl(url);
-        setImageUrl2(data.url);
-      });
-    };
+    fetchCoverArts();
   }, [coverArt]);
 
   return (
@@ -43,7 +40,7 @@ const MangaCard = ({
           <Image
             quality={50}
             sizes="200px"
-            src={imageUrl2}
+            src={imageUrl}
             alt="Manga"
             priority
             className=" w-full h-full object-cover"
@@ -59,8 +56,6 @@ const MangaCard = ({
           CH : {chapters && chapters.length > 0 ? chapters : "N/A"}
         </p>
       </div>
-      <p>{imageUrl}</p>
-      <p>{imageUrl2}</p>
     </div>
   );
 };

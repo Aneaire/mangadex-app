@@ -10,18 +10,18 @@ const nextConfig = {
       "noonu-57jgcrfry-angelos-projects-45570967",
     ],
   },
-  //   async rewrites() {
-  //     return [
-  //       {
-  //         source: "/api/manga/:path*",
-  //         destination: "https://api.mangadex.org/:path*",
-  //       },
-  //       {
-  //         source: "/api/manga/cover-art/:path*",
-  //         destination: "https://uploads.mangadex.org/covers/:path*",
-  //       },
-  //     ];
-  //   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/manga/:path*",
+        destination: "https://api.mangadex.org/:path*",
+      },
+      {
+        source: "/api/proxy/:path*",
+        destination: "https://uploads.mangadex.org/:path*", // Proxy to the external API
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -1,27 +1,41 @@
 "use client";
 
-import { useRef } from "react";
-import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
 
 const TestApi = () => {
-  const image = useRef<any>();
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
 
-  const fetchManga = async () => {
-    const res = await fetch(
-      "https://uploads.mangadex.org/covers/77bee52c-d2d6-44ad-a33a-1734c1fe696a/c384dedc-0f09-46ed-ae68-c81eb5eacdf4.jpg"
-    );
-    if (!res.ok) {
-      throw new Error("Image could not be fetched");
-    }
-    const imageBlob = await res.blob();
-    const imageURL = URL.createObjectURL(imageBlob);
-    image.current.src = imageURL;
-  };
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const coverArtId = "your-cover-art-id"; // Replace with your actual cover art ID
+        const response = await fetch(`/api/cover?coverArtId=${coverArtId}`);
+        const data = await response.json();
+
+        if (data.status === "success" && data.data) {
+          const base64Image = `data:${data.contentType};base64,${data.data}`;
+          setImageSrc(base64Image);
+        } else {
+          console.error("Error fetching image:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
 
   return (
     <div>
-      <img className=" size-10" ref={image} src="" alt="" />
-      Hi i am API Tester <Button onClick={fetchManga}>Fetch</Button>
+      <h1>Image from API</h1>
+      {imageSrc && (
+        <img
+          src={imageSrc}
+          alt="Cover Art"
+          style={{ width: "500px", height: "300px" }}
+        />
+      )}
     </div>
   );
 };

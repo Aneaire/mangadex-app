@@ -1,4 +1,3 @@
-/* eslint-disable */
 "use client";
 
 import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
