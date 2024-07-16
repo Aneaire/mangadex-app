@@ -126,7 +126,7 @@ export const getAllMangaChapters = async (
 export const getChapterPanels = async (chapterId: string) => {
   try {
     const response = await fetch(
-      `${mangaBaseUrl}/at-home/server/${chapterId}`,
+      `${MANGADEX_BASE_URL}/at-home/server/${chapterId}`,
       {
         method: "GET",
         headers: {
