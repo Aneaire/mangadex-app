@@ -11,7 +11,7 @@ export const chapterLimitList: number = 40;
 
 export const getManga = async (id: string) => {
   try {
-    const response = await fetch(`${url}/api/manga?manga_id=${id}`, {
+    const response = await fetch(`../api/manga?manga_id=${id}`, {
       method: "GET",
     });
 
