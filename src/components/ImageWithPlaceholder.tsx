@@ -26,7 +26,6 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
         sizes="100vw"
         quality={100}
         onLoad={() => setLoading(false)}
-        priority
       />
     </div>
   );

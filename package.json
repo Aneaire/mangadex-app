@@ -17,14 +17,16 @@
     "cookies-next": "^4.2.1",
     "embla-carousel-react": "^8.1.5",
     "flatlist-react": "^1.5.14",
-    "lucide-react": "^0.396.0",
+    "lucide-react": "^0.408.0",
     "next": "14.2.4",
+    "next-client-cookies": "^1.1.1",
     "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
     "react-intersection-observer": "^9.10.3",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "typescript": "^5",

@@ -14,7 +14,7 @@ export async function GET(
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 600 }, // Cache for 10 minutes
+      next: { revalidate: false },
     });
 
     if (!response.ok) throw Error;

@@ -32,7 +32,7 @@ export async function GET(request: Request) {
         },
         next: {
           tags: [listType],
-          revalidate: listType === "trending" ? 604800 : 0,
+          revalidate: listType === "trending" ? 604800 : 3600,
         },
       }
     );

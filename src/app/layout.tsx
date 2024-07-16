@@ -1,5 +1,6 @@
-import Header from "@/components/Header";
+import Header from "@/components/common/Header";
 import type { Metadata } from "next";
+import { CookiesProvider } from "next-client-cookies/server";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 
@@ -25,7 +26,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${montserrat.className}`}>
         <Header />
         <main className=" px-2 md:px-5 mt-6 max-w-5xl mx-auto min-h-screen">
-          {children}
+          <CookiesProvider>{children}</CookiesProvider>
         </main>
       </body>
     </html>

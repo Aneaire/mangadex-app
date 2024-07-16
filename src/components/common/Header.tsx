@@ -1,6 +1,13 @@
+"use client";
+import { useRouter } from "next/navigation";
+
 const Header = () => {
+  const router = useRouter();
   return (
-    <div className=" w-full sticky z-10 top-0 left-0 bg-secondaryBackground px-5 py-2">
+    <div
+      onClick={() => router.replace("/")}
+      className=" w-full z-10 top-0 left-0 bg-secondaryBackground px-5 py-2"
+    >
       <svg
         className="w-[200px]"
         viewBox="0 0 263 44"

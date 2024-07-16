@@ -1,6 +1,7 @@
 "use client";
 
 import { getCoverArt } from "@/lib/mangadex";
+import { useMangaChapters } from "@/lib/mangaStore";
 import { getTitle } from "@/lib/utils";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -19,6 +20,7 @@ const MangaCard = ({
 }) => {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
+  const setChapters = useMangaChapters((state) => state.setChapters);
 
   const fetchCoverArts = async () => {
     getCoverArt(coverArt, id).then((data: any) => {
@@ -30,9 +32,14 @@ const MangaCard = ({
     fetchCoverArts();
   }, [coverArt]);
 
+  const handleClick = () => {
+    router.push(`/manga/${id}`);
+    setChapters([]);
+  };
+
   return (
     <div
-      onClick={() => router.push(`/manga/${id}`)}
+      onClick={handleClick}
       className="bg-card cursor-pointer text-foreground rounded w-32 font-poppins"
     >
       <div className="relative w-32 aspect-[9/12] rounded overflow-hidden">

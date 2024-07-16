@@ -15,3 +15,27 @@ export const getCoverArtTypes = (
 export function getTitle(title: Record<string, string>): string {
   return title["ja-ro"] || Object.values(title)[0];
 }
+
+export const findIndices = (array: any[], idToFind: string) => {
+  // Find the index of the object with the specified id
+  const currentIndex = array.findIndex((obj) => obj.id === idToFind);
+
+  // If currentIndex is -1 (not found), return null or handle as needed
+  if (currentIndex === -1) {
+    return {
+      previousIndex: null,
+      nextIndex: null,
+    };
+  }
+
+  // Calculate previous index
+  const previousIndex = currentIndex > 0 ? currentIndex - 1 : null;
+
+  // Calculate next index
+  const nextIndex = currentIndex < array.length - 1 ? currentIndex + 1 : null;
+
+  return {
+    previousIndex,
+    nextIndex,
+  };
+};

@@ -1,4 +1,5 @@
 import { getAllMangaChapters } from "@/lib/mangadex";
+import { useMangaChapters } from "@/lib/mangaStore";
 import { LoaderPinwheelIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -12,7 +13,9 @@ const ChapterList = ({ id }: { id: string }) => {
     threshold: 0,
   });
 
-  const [chapterList, setChapterList] = useState<any[]>([]);
+  const { chapters, setChapters, addChapters } = useMangaChapters(
+    (state) => state
+  );
   const [chapterListFiltered, setChapterListFiltered] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [noMorePage, setNoMorePage] = useState(false);
@@ -25,20 +28,19 @@ const ChapterList = ({ id }: { id: string }) => {
     const fetchChapterList = async () => {
       const data = await getAllMangaChapters(id, page);
 
-      console.log(data);
       if (data.length === 0) {
         setNoMorePage(true);
       }
       if (!ignore) {
         const newData = data.filter((chapter: any) => {
-          const exist = chapterList.some(
+          const exist = chapters.some(
             (c: any) => c.attributes.chapter === chapter.attributes.chapter
           );
           if (!exist) {
             return chapter;
           }
         });
-        setChapterList((prev) => [...prev, ...newData]);
+        addChapters(newData);
         ignore = false;
       }
     };
@@ -55,6 +57,7 @@ const ChapterList = ({ id }: { id: string }) => {
       setPage((prev) => prev + 1);
     }
   }, [inView]);
+  console.log(chapters);
 
   const displayedChapters = new Set();
 
@@ -69,7 +72,7 @@ const ChapterList = ({ id }: { id: string }) => {
       </span>
       <div className=" w-full space-y-2">
         {filterDuplication
-          ? chapterList.map((chapter) => {
+          ? chapters.map((chapter) => {
               const chapterNumber = chapter.attributes.chapter;
 
               // Skip if the chapter number is already displayed
@@ -82,7 +85,7 @@ const ChapterList = ({ id }: { id: string }) => {
 
               return <Chapter key={chapter.id} chapter={chapter} />;
             })
-          : chapterList.map((chapter: any) => (
+          : chapters.map((chapter: any) => (
               <Chapter key={chapter.id} chapter={chapter} />
             ))}
       </div>

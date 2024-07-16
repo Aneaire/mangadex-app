@@ -113,7 +113,6 @@ export const getAllMangaChapters = async (
     if (!res.ok) throw Error;
 
     const data = await res.json();
-    console.log(data);
 
     return data.data;
   } catch (error) {
