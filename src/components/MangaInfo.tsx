@@ -1,4 +1,4 @@
-import { getAllMangaChapters, getCoverArt, getManga } from "@/lib/mangadex";
+import { getCoverArt, getManga } from "@/lib/mangadex";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
 import Image from "next/image";
@@ -15,7 +15,6 @@ const MangaInfo = ({ id }: { id: string }) => {
         setImageUrl(data);
       });
     });
-    getAllMangaChapters(id);
   }, [id]);
 
   const [toggleDesc, setToggleDesc] = useState(false);
