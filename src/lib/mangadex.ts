@@ -7,7 +7,7 @@ const url = `http://localhost:${port}`;
 
 const MANGADEX_BASE_URL = "https://api.mangadex.org";
 
-export const limitList: number = 2;
+export const limitList: number = 10;
 export const chapterLimitList: number = 40;
 
 export const getManga = async (id: string) => {

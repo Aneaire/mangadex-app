@@ -33,7 +33,7 @@ const MangaCard = ({
   return (
     <div
       onClick={() => router.push(`/manga/${id}`)}
-      className="bg-card text-foreground rounded w-32 font-poppins"
+      className="bg-card cursor-pointer text-foreground rounded w-32 font-poppins"
     >
       <div className="relative w-32 aspect-[9/12] rounded overflow-hidden">
         {imageUrl && (

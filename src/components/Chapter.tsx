@@ -7,7 +7,7 @@ const Chapter = ({ chapter }: { chapter: IChapters }) => {
     <div
       onClick={() => router.push(`/panel/${chapter.id}`)}
       key={chapter.id}
-      className=" rounded w-full bg-chapter px-4 py-2 "
+      className=" rounded w-full cursor-pointer bg-chapter px-4 py-2 "
     >
       Chapter{" "}
       {chapter.attributes.chapter ? chapter.attributes.chapter : "Unknown"}

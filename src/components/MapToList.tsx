@@ -8,7 +8,7 @@ const MapToList = ({ mangaList }: { mangaList: IMangaCard[] }) => {
     const coverArtId = getCoverArtTypes(manga)[0].id;
 
     return (
-      <CarouselItem key={manga.id}>
+      <CarouselItem key={manga.id} className=" basis-1.5/12">
         <MangaCard
           id={manga.id}
           key={manga.id}
