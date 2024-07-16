@@ -60,26 +60,32 @@ export const fetchMangaList = async (page = 1, listType: ITypeList) => {
   }
 };
 
-export const getCoverArt = async (coverArtId: string) => {
+export const getCoverArt = async (coverArtId: string, mangaId: string) => {
   try {
-    const response = await fetch(`/api/proxy/covers/${coverArtId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `/api/cover-art/${mangaId}?coverArtId=${coverArtId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       console.error("Error fetching image:", response.statusText);
       return null;
     }
 
-    const imageBuffer = await response.arrayBuffer();
-    const base64Image = `data:image/jpeg;base64,${Buffer.from(
-      imageBuffer
-    ).toString("base64")}`;
-    console.log(base64Image);
-    return base64Image;
+    const data = await response.json();
+
+    // const imageBuffer = await response.arrayBuffer();
+    // const base64Image = `data:image/jpeg;base64,${Buffer.from(
+    //   imageBuffer
+    // ).toString("base64")}`;
+    // console.log(data);
+    return data;
+    // return base64Image;
   } catch (error) {
     console.error("Error fetching cover art details:", error);
     return null;

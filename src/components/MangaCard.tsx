@@ -21,8 +21,8 @@ const MangaCard = ({
   const [imageUrl, setImageUrl] = useState("");
 
   const fetchCoverArts = async () => {
-    getCoverArt(coverArt).then(async (data: any) => {
-      console.log(data);
+    getCoverArt(coverArt, id).then((data: any) => {
+      setImageUrl(data.imageUrl);
     });
   };
 
