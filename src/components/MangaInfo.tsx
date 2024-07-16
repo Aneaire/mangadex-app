@@ -11,7 +11,7 @@ const MangaInfo = ({ id }: { id: string }) => {
   useEffect(() => {
     getManga(id).then((data) => {
       setManga(data);
-      getCoverArt(getCoverArtTypes(data)[0].id).then((data: any) => {
+      getCoverArt(getCoverArtTypes(data)[0].id, id).then((data: any) => {
         setImageUrl(data);
       });
     });
