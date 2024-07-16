@@ -11,7 +11,7 @@ export const chapterLimitList: number = 40;
 
 export const getManga = async (id: string) => {
   try {
-    const response = await fetch(`../api/manga/${id}`, {
+    const response = await fetch(`${url}/api/manga?manga_id=${id}`, {
       method: "GET",
     });
 
@@ -100,31 +100,21 @@ export const getAllMangaChapters = async (
       manga: mangaId,
       limit: chapterLimitList.toString(),
       offset: offset.toString(),
-      "order[volume]": "desc",
-      "order[chapter]": "desc",
-      "order[readableAt]": "desc",
-      "order[updatedAt]": "desc",
-      "order[createdAt]": "desc",
-      "translatedLanguage[]": "en",
     });
 
-    const response = await fetch(`${mangaBaseUrl}/chapter?${queryParams}`, {
+    const res = await fetch(`../${mangaBaseUrl}/chapter?${queryParams}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      next: { revalidate: 600 }, // Cache for 10 minutes
     });
 
-    const data = await response.json();
+    if (!res.ok) throw Error;
 
-    if (!response.ok) {
-      throw new Error((data as any) || "Error fetching manga chapters");
-    }
+    const data = await res.json();
+    console.log(data);
 
-    allChapters = [...allChapters, ...data.data];
-
-    return allChapters;
+    return data.data;
   } catch (error) {
     console.error("Error fetching all manga chapters:", error);
     return [];

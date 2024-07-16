@@ -1,5 +1,6 @@
 "use client";
 
+import ChapterList from "@/components/ChapterList";
 import MangaInfo from "@/components/MangaInfo";
 import { useParams } from "next/navigation";
 
@@ -10,7 +11,7 @@ const Manga = () => {
   return (
     <section className=" w-full px-1 lg:px-3">
       <MangaInfo id={id} />
-      {/* <ChapterList id={id} /> */}
+      <ChapterList id={id} />
     </section>
   );
 };

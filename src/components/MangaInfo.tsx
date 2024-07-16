@@ -1,25 +1,25 @@
 import { getCoverArt, getManga } from "@/lib/mangadex";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 
 const MangaInfo = ({ id }: { id: string }) => {
   const [manga, setManga] = useState<IMangaCard>();
 
-  useEffect(() => {
-    getManga(id).then((data) => {
-      setManga(data);
-      getCoverArt(getCoverArtTypes(data)[0].id, id).then((data: any) => {
-        setImageUrl(data);
-      });
-    });
-  }, [id]);
-
   const [toggleDesc, setToggleDesc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
-  console.log(manga);
+  useEffect(() => {
+    getManga(id).then((data) => {
+      setManga(data.data);
+      const coverArtId = getCoverArtTypes(data.data)[0].id;
+      getCoverArt(coverArtId, id).then((data: any) => {
+        setImageUrl(data.imageUrl);
+      });
+    });
+  }, [id]);
 
   if (!manga) return <></>;
 
@@ -27,7 +27,7 @@ const MangaInfo = ({ id }: { id: string }) => {
     <section className=" w-full flex flex-col text-center sm:text-start sm:flex-row gap-4">
       <div className=" w-full sm:w-[300px] mx-auto">
         <div className="relative object-cover w-full aspect-[9/12] ">
-          {/* {imageUrl && (
+          {imageUrl && (
             <Image
               objectFit="cover"
               src={imageUrl}
@@ -35,7 +35,7 @@ const MangaInfo = ({ id }: { id: string }) => {
               alt="cover art"
               sizes="400px"
             />
-          )} */}
+          )}
         </div>
       </div>
       <div className=" basis-10/12">
