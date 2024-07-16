@@ -6,7 +6,7 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="relative w-full min-h-screen">
+    <div className="relative w-full">
       {loading && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-200">
           {/* Placeholder */}
@@ -25,7 +25,8 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
         alt="panel"
         sizes="100vw"
         quality={100}
-        onLoadingComplete={() => setLoading(false)}
+        onLoad={() => setLoading(false)}
+        priority
       />
     </div>
   );

@@ -8,6 +8,7 @@ const GuraLoading = () => {
       height={1080}
       src={`/gura-loading-${randomNumber}.gif`}
       alt="animated gif"
+      priority
       className="w-3/6 aspect-square object-cover rounded-full"
     />
   );

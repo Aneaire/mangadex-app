@@ -1,6 +1,7 @@
 import { ITypeList } from "@/types/manga";
 
 const mangaBaseUrl = "api/manga";
+const panelsBaseUrl = "api/panels";
 const port = process.env.PORT || 3000;
 const url = `http://localhost:${port}`;
 
@@ -125,24 +126,19 @@ export const getAllMangaChapters = async (
 
 export const getChapterPanels = async (chapterId: string) => {
   try {
-    const response = await fetch(
-      `${MANGADEX_BASE_URL}/at-home/server/${chapterId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 600 }, // Cache for 10 minutes
-      }
-    );
+    const response = await fetch(`/${panelsBaseUrl}/${chapterId}`, {
+      method: "GET",
+    });
 
     const data = await response.json();
+    console.log(data.data.chapter);
 
     if (!response.ok) {
       throw new Error(data.error || "Error fetching chapter pages");
     }
-    return data.chapter.data.map(
-      (page: string) => `${data.baseUrl}/data/${data.chapter.hash}/${page}`
+    return data.data.chapter.data.map(
+      (page: string) =>
+        `${data.data.baseUrl}/data/${data.data.chapter.hash}/${page}`
     );
   } catch (error) {
     console.error("Error fetching chapter pages:", error);
