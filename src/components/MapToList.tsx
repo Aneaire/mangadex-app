@@ -1,19 +1,22 @@
 import { getCoverArtTypes } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
 import MangaCard from "./MangaCard";
+import { CarouselItem } from "./ui/carousel";
 
 const MapToList = ({ mangaList }: { mangaList: IMangaCard[] }) => {
   return mangaList.map((manga: IMangaCard) => {
     const coverArtId = getCoverArtTypes(manga)[0].id;
 
     return (
-      <MangaCard
-        id={manga.id}
-        key={manga.id}
-        coverArt={coverArtId}
-        title={manga.attributes.title}
-        chapters={manga.attributes.lastChapter}
-      />
+      <CarouselItem key={manga.id}>
+        <MangaCard
+          id={manga.id}
+          key={manga.id}
+          coverArt={coverArtId}
+          title={manga.attributes.title}
+          chapters={manga.attributes.lastChapter}
+        />
+      </CarouselItem>
     );
   });
 };

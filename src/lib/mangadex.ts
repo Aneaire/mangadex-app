@@ -1,25 +1,18 @@
 import { ITypeList } from "@/types/manga";
 
-const mangaListEndpoint = "api/manga";
-const coverArtEndpoint = "api/cover-art";
+const mangaBaseUrl = "api/manga";
+const port = process.env.PORT || 3000;
+const url = `http://localhost:${port}`;
 
 const MANGADEX_BASE_URL = "https://api.mangadex.org";
-const COVER_ART_BASE_URL = "https://uploads.mangadex.org/covers";
 
 export const limitList: number = 2;
 export const chapterLimitList: number = 40;
 
-export const headers = {
-  Authorization: `Bearer nh9Uq1J2qIE2IM7H8hDp7yz0NHYXtiZs`,
-  "Content-Type": "application/json",
-};
-
 export const getManga = async (id: string) => {
   try {
-    const response = await fetch(`${mangaListEndpoint}/manga/${id}`, {
+    const response = await fetch(`../api/manga/${id}`, {
       method: "GET",
-      headers: headers,
-      next: { revalidate: 172800 }, // Caches the response for 2 days
     });
 
     if (!response.ok) {
@@ -36,6 +29,7 @@ export const getManga = async (id: string) => {
 
 export const fetchMangaList = async (page = 1, listType: ITypeList) => {
   try {
+    console.log(port);
     const queryParams = new URLSearchParams({
       limit: limitList.toString(),
       offset: ((page - 1) * limitList).toString(),
@@ -43,7 +37,7 @@ export const fetchMangaList = async (page = 1, listType: ITypeList) => {
       listType,
     });
 
-    const response = await fetch(`${mangaListEndpoint}?${queryParams}`, {
+    const response = await fetch(`${mangaBaseUrl}/list?${queryParams}`, {
       method: "GET",
     });
 
@@ -114,16 +108,13 @@ export const getAllMangaChapters = async (
       "translatedLanguage[]": "en",
     });
 
-    const response = await fetch(
-      `${mangaListEndpoint}/chapter?${queryParams}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: { revalidate: 600 }, // Cache for 10 minutes
-      }
-    );
+    const response = await fetch(`${mangaBaseUrl}/chapter?${queryParams}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 600 }, // Cache for 10 minutes
+    });
 
     const data = await response.json();
 
@@ -145,7 +136,7 @@ export const getAllMangaChapters = async (
 export const getChapterPanels = async (chapterId: string) => {
   try {
     const response = await fetch(
-      `${mangaListEndpoint}/at-home/server/${chapterId}`,
+      `${mangaBaseUrl}/at-home/server/${chapterId}`,
       {
         method: "GET",
         headers: {
@@ -214,7 +205,7 @@ export const testApiCall = async (page = 1) => {
       "order[createdAt]": "desc",
     });
 
-    const response = await fetch(`${mangaListEndpoint}?${queryParams}`, {
+    const response = await fetch(`${mangaBaseUrl}?${queryParams}`, {
       method: "GET",
     });
 

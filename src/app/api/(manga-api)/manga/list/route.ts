@@ -30,8 +30,13 @@ export async function GET(request: Request) {
         headers: {
           "Content-Type": "application/json",
         },
+        next: {
+          tags: [listType],
+          revalidate: listType === "trending" ? 604800 : 0,
+        },
       }
     );
+    console.log(fetchedData);
 
     if (!fetchedData.ok) {
       return NextResponse.json({

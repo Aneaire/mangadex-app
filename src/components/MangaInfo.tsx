@@ -1,8 +1,7 @@
 import { getCoverArt, getManga } from "@/lib/mangadex";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
-import Image from "next/image";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 
 const MangaInfo = ({ id }: { id: string }) => {
@@ -20,13 +19,15 @@ const MangaInfo = ({ id }: { id: string }) => {
   const [toggleDesc, setToggleDesc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
+  console.log(manga);
+
   if (!manga) return <></>;
 
   return (
     <section className=" w-full flex flex-col text-center sm:text-start sm:flex-row gap-4">
       <div className=" w-full sm:w-[300px] mx-auto">
         <div className="relative object-cover w-full aspect-[9/12] ">
-          {imageUrl && (
+          {/* {imageUrl && (
             <Image
               objectFit="cover"
               src={imageUrl}
@@ -34,7 +35,7 @@ const MangaInfo = ({ id }: { id: string }) => {
               alt="cover art"
               sizes="400px"
             />
-          )}
+          )} */}
         </div>
       </div>
       <div className=" basis-10/12">
@@ -64,4 +65,4 @@ const MangaInfo = ({ id }: { id: string }) => {
   );
 };
 
-export default memo(MangaInfo);
+export default MangaInfo;
