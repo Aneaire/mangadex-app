@@ -39,6 +39,7 @@ const Panel = () => {
           <ImageWithPlaceholder src={url} key={url} />
         </Suspense>
       ))}
+      <ChapterNav id={id} />
     </section>
   );
 };
