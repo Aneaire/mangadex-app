@@ -5,7 +5,7 @@ import { getChapterPanels } from "@/lib/mangadex";
 import { useParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
-const page = () => {
+const Panel = () => {
   const params = useParams();
   const { id } = params as { id: string };
 
@@ -27,7 +27,6 @@ const page = () => {
     };
   }, [id]);
 
-  console.log(panelList);
   return (
     <section className="scroll-smooth bg-secondaryBackground relative w-full">
       {panelList.map((url) => (
@@ -39,4 +38,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Panel;

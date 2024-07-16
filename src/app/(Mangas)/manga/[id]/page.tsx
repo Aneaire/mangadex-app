@@ -4,7 +4,7 @@ import ChapterList from "@/components/ChapterList";
 import MangaInfo from "@/components/MangaInfo";
 import { useParams } from "next/navigation";
 
-const page = () => {
+const Manga = () => {
   const params = useParams();
   const { id } = params as { id: string };
 
@@ -16,4 +16,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Manga;
