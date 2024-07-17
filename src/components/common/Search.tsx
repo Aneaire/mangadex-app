@@ -55,7 +55,7 @@ const Search = () => {
         </form>
       </div>
       {data && onSearch && (
-        <div className="absolute bg-secondaryBackground top-12 right-0 z-10 rounded-md w-full mx-auto md:mx-0 md:w-7/12 lg:w-5/12 overflow-y-scroll max-h-[400px] no-scrollbar border-secondaryBackground border-4">
+        <div className="absolute bg-secondaryBackground top-12 right-0 z-10 rounded-md w-full mx-auto md:mx-0 md:w-7/12 lg:w-5/12 overflow-y-scroll overflow-x-hidden max-h-[400px] no-scrollbar border-secondaryBackground border-4">
           {data.data.length === 0 && <NoDataPlaceholder text="No results" />}
 
           {data?.data.data.map((manga: IMangaCard) => {
