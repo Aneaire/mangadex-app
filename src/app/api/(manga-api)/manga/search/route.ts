@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     const queryParams = new URLSearchParams({
       title: title,
-      limit: "20",
+      limit: "7",
       "order[rating]": "desc",
       "order[followedCount]": "desc",
     });
