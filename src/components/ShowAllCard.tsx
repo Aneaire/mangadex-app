@@ -1,6 +1,6 @@
 import { getCoverArtTypes } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
-import MangaCard from "./MangaCard";
+import GridMangaCard from "./GridMangaCard";
 
 const ShowAllCard = ({ mangaList }: { mangaList: any }) => {
   return mangaList.pages.map((list: any) =>
@@ -8,7 +8,7 @@ const ShowAllCard = ({ mangaList }: { mangaList: any }) => {
       const coverArtId = getCoverArtTypes(manga)[0].id;
 
       return (
-        <MangaCard
+        <GridMangaCard
           id={manga.id}
           key={manga.id}
           coverArt={coverArtId}

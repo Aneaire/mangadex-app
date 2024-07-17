@@ -2,7 +2,7 @@
 
 import { useFetchMangaList } from "@/lib/query/queries";
 import { ITypeList } from "@/types/manga";
-import { Loader2 } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import MapToList from "./MapToList";
@@ -22,16 +22,11 @@ const MangaList = ({ type }: { type: ITypeList }) => {
 
   const { data, isLoading, error, fetchNextPage } = useFetchMangaList({ type });
 
-  // useEffect(() => {
-  //   console.log(inView);
-  //   if (inView) fetchNextPage();
-  // }, [inView]);
-
   if (inView) fetchNextPage();
 
   const handleSeeMore = () => {
     setSeeMore(!seeMore);
-    if (seeMore) fetchNextPage();
+    // if (seeMore) fetchNextPage();
   };
 
   if (isLoading) return <></>;
@@ -40,7 +35,14 @@ const MangaList = ({ type }: { type: ITypeList }) => {
       <h5 className=" font-medium font-montserrat pb-2 w-full flex justify-between items-center">
         <span>{heading}</span>{" "}
         <Button onClick={handleSeeMore} className="">
-          See more
+          <p className=" lg:inline hidden">
+            {seeMore ? "See less" : "See more"}{" "}
+          </p>
+          {seeMore ? (
+            <EyeOffIcon className=" ml-2" size={20} />
+          ) : (
+            <EyeIcon className=" ml-2" size={20} />
+          )}
         </Button>
       </h5>
       {!seeMore && data && (
@@ -53,9 +55,14 @@ const MangaList = ({ type }: { type: ITypeList }) => {
       <div className=" flex flex-wrap gap-3 ">
         {seeMore && (
           <>
-            <ShowAllCard mangaList={data} />
-            <div className=" h-full flex items-center justify-center" ref={ref}>
-              <Loader2 />
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              <ShowAllCard mangaList={data} />{" "}
+              <div
+                className=" w-5/6 mt-auto py-10  flex items-center justify-center"
+                ref={ref}
+              >
+                <Loader2 />
+              </div>
             </div>
           </>
         )}
