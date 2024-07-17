@@ -29,7 +29,9 @@ const Search = () => {
     <div>
       <div
         className={`flex absolute transition-all duration-500 top-2 right-2 z-10 px-2 rounded-md ${
-          search ? " bg-background lg:max-w-600 w-9/12" : " bg-slate-700 w-fit"
+          search
+            ? " bg-background lg:max-w-600 w-9/12 md:w-8/12  lg:w-7/12 xl:w-5/12"
+            : " bg-slate-700 w-fit"
         }`}
       >
         <span className=" flex items-center cursor-pointer px-1 py-2">
