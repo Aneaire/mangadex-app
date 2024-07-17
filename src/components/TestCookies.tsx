@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 const TestCookies = () => {
   const testCookies = useCookies();
-  const mangaListId = ["1", "2", "3", "4"];
+  const mangaListId = [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }];
 
   const handleSet = () => {
     testCookies.set("one", JSON.stringify(mangaListId), { expires: 60 });

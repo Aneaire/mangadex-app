@@ -2,38 +2,47 @@ import { useMangaChapters } from "@/lib/mangaStore";
 import { findIndices } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { memo } from "react";
+import { memo, useMemo, useState } from "react";
 import { Button } from "../ui/button";
 
 const ChapterNav = ({ id }: { id: string }) => {
   const chapters = useMangaChapters((state) => state.chapters);
   const router = useRouter();
 
+  const [indices, setIndices] = useState<{
+    previousIndex: number | null;
+    nextIndex: number | null;
+  }>({ previousIndex: null, nextIndex: null });
+
+  useMemo(() => {
+    const { previousIndex, nextIndex } = findIndices(chapters, id);
+    setIndices({ previousIndex, nextIndex });
+    console.log({ previousIndex, nextIndex });
+  }, [chapters, id]);
+
   const handlePrevBtn = () => {
-    const findIndex: number = findIndices(chapters, id).previousIndex!;
-    console.log(findIndex);
-    if (findIndex === null) return;
-    router.replace(`/panel/${chapters[findIndex].id}`);
+    if (indices.previousIndex === null) return;
+    router.replace(`/panel/${chapters[indices.previousIndex].id}`);
   };
 
   const handleNextBtn = () => {
-    const findIndex: number = findIndices(chapters, id).nextIndex!;
-    console.log(findIndex);
-    if (findIndex === null) return;
-    router.replace(`/panel/${chapters[findIndex].id}`);
+    if (indices.nextIndex === null) return;
+    router.replace(`/panel/${chapters[indices.nextIndex].id}`);
   };
 
   return (
     <div className="w-full flex py-5 gap-2 justify-center bg-background">
       <Button
-        className=" flex gap-2 bg-secondaryBackground"
+        className="flex gap-2 bg-secondaryBackground"
         onClick={handlePrevBtn}
+        disabled={indices.previousIndex === null}
       >
         <ChevronLeft /> Prev Chapter
       </Button>
       <Button
-        className=" flex gap-2 bg-secondaryBackground"
+        className="flex gap-2 bg-secondaryBackground"
         onClick={handleNextBtn}
+        disabled={indices.nextIndex === null}
       >
         Next Chapter <ChevronRight />
       </Button>

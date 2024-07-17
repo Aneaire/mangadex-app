@@ -3,7 +3,6 @@
 import ChapterNav from "@/components/common/ChapterNav";
 import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 import { getChapterPanels } from "@/lib/mangadex";
-import { useMangaChapters } from "@/lib/mangaStore";
 import { useParams, useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
@@ -13,7 +12,6 @@ const Panel = () => {
   const { id } = params as { id: string };
 
   const [panelList, setPanelList] = useState([]);
-  const chapters = useMangaChapters((state) => state.chapters);
 
   useEffect(() => {
     let ignore = false;
@@ -34,6 +32,9 @@ const Panel = () => {
   return (
     <section className="scroll-smooth bg-secondaryBackground relative w-full">
       <ChapterNav id={id} />
+      {!panelList && (
+        <div className="w-full h-screen rounded-none bg-secondaryBackground animate-pulse flex items-center justify-center" />
+      )}
       {panelList.map((url) => (
         <Suspense key={url} fallback={<div>Loading...</div>}>
           <ImageWithPlaceholder src={url} key={url} />

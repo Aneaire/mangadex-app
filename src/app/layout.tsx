@@ -1,4 +1,5 @@
 import Header from "@/components/common/Header";
+import QueryProvider from "@/lib/query/QueryProvider";
 import type { Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
 import { Inter, Montserrat } from "next/font/google";
@@ -24,10 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${montserrat.className}`}>
-        <Header />
-        <main className=" px-2 md:px-5 mt-6 max-w-5xl mx-auto min-h-screen">
-          <CookiesProvider>{children}</CookiesProvider>
-        </main>
+        <CookiesProvider>
+          <Header />
+          {/* <Search /> */}
+          <main className=" md:px-5 mt-6 max-w-5xl mx-auto min-h-screen">
+            <QueryProvider>{children}</QueryProvider>
+          </main>
+        </CookiesProvider>
       </body>
     </html>
   );

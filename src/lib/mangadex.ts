@@ -29,10 +29,10 @@ export const getManga = async (id: string) => {
 };
 
 export const fetchMangaList = async (page = 1, listType: ITypeList) => {
+  console.log(page);
   try {
-    console.log(port);
     const queryParams = new URLSearchParams({
-      limit: limitList.toString(),
+      limit: page == 1 ? limitList.toString() : "5",
       offset: ((page - 1) * limitList).toString(),
       order: "desc",
       listType,
@@ -49,6 +49,17 @@ export const fetchMangaList = async (page = 1, listType: ITypeList) => {
     const data = await response.json();
 
     return data;
+  } catch (error) {
+    console.error("Error fetching trending manga:", error);
+    return [];
+  }
+};
+
+export const searchManga = (query: string) => {
+  try {
+    return fetch(`/api/manga/search?title=${query}`, {
+      method: "GET",
+    }).then((response) => response.json());
   } catch (error) {
     console.error("Error fetching trending manga:", error);
     return [];

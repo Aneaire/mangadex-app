@@ -29,10 +29,11 @@ export const findIndices = (array: any[], idToFind: string) => {
   }
 
   // Calculate previous index
-  const previousIndex = currentIndex > 0 ? currentIndex - 1 : null;
+  const nextIndex = currentIndex > 0 ? currentIndex - 1 : null;
 
   // Calculate next index
-  const nextIndex = currentIndex < array.length - 1 ? currentIndex + 1 : null;
+  const previousIndex =
+    currentIndex < array.length - 1 ? currentIndex + 1 : null;
 
   return {
     previousIndex,
