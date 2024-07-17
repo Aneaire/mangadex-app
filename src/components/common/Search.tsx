@@ -28,8 +28,8 @@ const Search = () => {
   return (
     <div>
       <div
-        className={`flex absolute max-w-[300px] transition-all duration-500 top-1 right-2 z-10 px-2 rounded-md ${
-          search ? " bg-background lg:max-w-600 w-3/6" : " bg-slate-700 w-fit"
+        className={`flex absolute transition-all duration-500 top-2 right-2 z-10 px-2 rounded-md ${
+          search ? " bg-background lg:max-w-600 w-9/12" : " bg-slate-700 w-fit"
         }`}
       >
         <span className=" flex items-center cursor-pointer px-1 py-2">
@@ -55,7 +55,7 @@ const Search = () => {
         </form>
       </div>
       {data && onSearch && (
-        <div className="absolute bg-secondaryBackground top-12 right-2 z-10 rounded-md w-10/12 mx-auto md:mx-0 md:w-7/12 lg:w-5/12 overflow-y-scroll max-h-[400px] no-scrollbar border-secondaryBackground border-4">
+        <div className="absolute bg-secondaryBackground top-12 right-0 z-10 rounded-md w-full mx-auto md:mx-0 md:w-7/12 lg:w-5/12 overflow-y-scroll max-h-[400px] no-scrollbar border-secondaryBackground border-4">
           {data.data.length === 0 && <NoDataPlaceholder text="No results" />}
 
           {data?.data.data.map((manga: IMangaCard) => {

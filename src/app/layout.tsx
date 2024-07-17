@@ -1,4 +1,5 @@
 import Header from "@/components/common/Header";
+import Search from "@/components/common/Search";
 import QueryProvider from "@/lib/query/QueryProvider";
 import type { Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
@@ -29,7 +30,9 @@ export default function RootLayout({
           <Header />
           {/* <Search /> */}
           <main className=" md:px-5 mt-6 max-w-5xl mx-auto min-h-screen">
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              {children} <Search />
+            </QueryProvider>
           </main>
         </CookiesProvider>
       </body>
