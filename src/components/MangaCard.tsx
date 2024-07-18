@@ -40,9 +40,9 @@ const MangaCard = ({
   return (
     <div
       onClick={handleClick}
-      className="bg-card cursor-pointer text-foreground rounded w-32 font-poppins"
+      className="bg-card cursor-pointer text-foreground rounded w-32 font-poppins "
     >
-      <div className="relative w-32 aspect-[9/12] rounded overflow-hidden">
+      <div className="relative w-full aspect-[9/12] rounded overflow-hidden">
         {imageUrl && (
           <Image
             quality={50}
@@ -55,11 +55,11 @@ const MangaCard = ({
           />
         )}
       </div>
-      <div className="px-0.5">
+      <div className="px-0.5 w-full">
         <p className="text-sm font-medium line-clamp-1 break-all text-white">
           {getTitle(title)}
         </p>
-        <p className="text-accent text-xs mt-0.5">
+        <p className=" text-[10px]">
           CH : {chapters && chapters.length > 0 ? chapters : "N/A"}
         </p>
       </div>

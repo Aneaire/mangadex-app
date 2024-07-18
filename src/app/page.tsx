@@ -1,3 +1,4 @@
+import LibraryList from "@/components/library/LibraryList";
 import MangaList from "@/components/MangaList";
 
 const Home = () => {
@@ -5,6 +6,7 @@ const Home = () => {
     <main className=" w-full min-h-screen flex gap-5 flex-col px-1.5 lg:px-5 ">
       <MangaList type="trending" />
       <MangaList type="new releases" />
+      <LibraryList />
       {/* <TestApi /> */}
     </main>
   );

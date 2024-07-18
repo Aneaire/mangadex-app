@@ -1,12 +1,16 @@
+import { useCupcakeContext } from "@/context/cookiesContext";
 import { getCoverArt, getManga } from "@/lib/mangadex";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
+import { HeartHandshakeIcon, HeartPulseIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 const MangaInfo = ({ id }: { id: string }) => {
   const [manga, setManga] = useState<IMangaCard>();
+  const { library, saveToLibrary, removeToLibrary } = useCupcakeContext();
 
   const [toggleDesc, setToggleDesc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
@@ -16,10 +20,12 @@ const MangaInfo = ({ id }: { id: string }) => {
       setManga(data.data);
       const coverArtId = getCoverArtTypes(data.data)[0].id;
       getCoverArt(coverArtId, id).then((data: any) => {
-        setImageUrl(data.imageUrl);
+        setImageUrl(data);
       });
     });
   }, [id]);
+
+  const saved = library.includes(id);
 
   if (!manga) return <></>;
 
@@ -60,6 +66,21 @@ const MangaInfo = ({ id }: { id: string }) => {
             {manga.attributes.status}
           </Badge>
         </span>
+        {!saved ? (
+          <Button
+            onClick={() => saveToLibrary(id)}
+            className=" flex items-center justify-center gap-2 bg-blue-600 px-3 mt-5 text-base"
+          >
+            Save to Library <HeartHandshakeIcon />
+          </Button>
+        ) : (
+          <Button
+            onClick={() => removeToLibrary(id)}
+            className=" flex items-center justify-center gap-2 bg-rose-600 px-3 mt-5 text-base"
+          >
+            Unsaved <HeartPulseIcon />
+          </Button>
+        )}
       </div>
     </section>
   );

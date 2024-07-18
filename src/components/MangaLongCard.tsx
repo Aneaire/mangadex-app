@@ -32,7 +32,7 @@ const MangaLongCard = ({
 
   const fetchCoverArts = async () => {
     getCoverArt(coverArt, id).then((data: any) => {
-      setImageUrl(data.imageUrl);
+      setImageUrl(data);
     });
   };
 

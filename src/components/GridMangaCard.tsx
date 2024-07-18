@@ -24,7 +24,7 @@ const GridMangaCard = ({
 
   const fetchCoverArts = async () => {
     getCoverArt(coverArt, id).then((data: any) => {
-      setImageUrl(data.imageUrl);
+      setImageUrl(data);
     });
   };
 
@@ -40,7 +40,7 @@ const GridMangaCard = ({
   return (
     <div
       onClick={handleClick}
-      className="bg-card cursor-pointer text-foreground rounded w-full sm:w-5/6 p-2"
+      className="bg-card cursor-pointer text-foreground rounded w-full sm:w-5/6 p-2 transition-all hover:bg-secondaryBackground hover:rotate-12 hover:scale-110"
     >
       <div className="relative w-full aspect-[9/12] rounded overflow-hidden">
         {imageUrl && (
@@ -59,7 +59,7 @@ const GridMangaCard = ({
         <p className="text-sm font-medium line-clamp-1 break-all text-white">
           {getTitle(title)}
         </p>
-        <p className="text-accent text-xs mt-0.5">
+        <p className=" text-[10px]">
           CH : {chapters && chapters.length > 0 ? chapters : "N/A"}
         </p>
       </div>

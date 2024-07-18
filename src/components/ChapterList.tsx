@@ -1,3 +1,4 @@
+import { useCupcakeContext } from "@/context/cookiesContext";
 import { getAllMangaChapters } from "@/lib/mangadex";
 import { useMangaChapters } from "@/lib/mangaStore";
 import { LoaderPinwheelIcon } from "lucide-react";
@@ -16,11 +17,13 @@ const ChapterList = ({ id }: { id: string }) => {
   const { chapters, setChapters, addChapters } = useMangaChapters(
     (state) => state
   );
-  const [chapterListFiltered, setChapterListFiltered] = useState<any[]>([]);
+  const { readedChapters } = useCupcakeContext();
   const [page, setPage] = useState(1);
   const [noMorePage, setNoMorePage] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [filterDuplication, setFilterDuplication] = useState(false);
+
+  console.log(readedChapters(id));
 
   useEffect(() => {
     let ignore = false;
@@ -74,6 +77,7 @@ const ChapterList = ({ id }: { id: string }) => {
         {filterDuplication
           ? chapters.map((chapter) => {
               const chapterNumber = chapter.attributes.chapter;
+              const isReaded = readedChapters(id).includes(chapterNumber);
 
               // Skip if the chapter number is already displayed
               if (displayedChapters.has(chapterNumber)) {
@@ -83,11 +87,26 @@ const ChapterList = ({ id }: { id: string }) => {
               // Add the chapter number to the set of displayed chapters
               displayedChapters.add(chapterNumber);
 
-              return <Chapter key={chapter.id} chapter={chapter} />;
+              return (
+                <Chapter
+                  isReaded={isReaded}
+                  mangaId={id}
+                  key={chapter.id}
+                  chapter={chapter}
+                />
+              );
             })
-          : chapters.map((chapter: any) => (
-              <Chapter key={chapter.id} chapter={chapter} />
-            ))}
+          : chapters.map((chapter: any) => {
+              const isReaded = readedChapters(id).includes(chapter.id);
+              return (
+                <Chapter
+                  isReaded={isReaded}
+                  mangaId={id}
+                  key={chapter.id}
+                  chapter={chapter}
+                />
+              );
+            })}
       </div>
       {!showMore ? (
         <Button

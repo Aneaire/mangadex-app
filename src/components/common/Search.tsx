@@ -30,7 +30,7 @@ const Search = () => {
       <div
         className={`flex absolute transition-all duration-500 top-2 right-2 z-10 px-2 rounded-md ${
           search
-            ? " bg-background lg:max-w-600 w-9/12 md:w-8/12  lg:w-7/12 xl:w-5/12"
+            ? " bg-background lg:max-w-600 w-7/12  sm:w-6/12 md:w-4/12  lg:w-3/12 xl:w-2/12"
             : " bg-slate-700 w-fit"
         }`}
       >
@@ -50,7 +50,7 @@ const Search = () => {
             onChange={setSearchValue}
             onClick={() => setOnSearch(true)}
             placeholder="Search"
-            className={`px-0 w-0 placeholder:hidden duration-150 transition-all ease-in delay-500 ${
+            className={`px-0 w-0 duration-150 transition-all ease-in delay-500 ${
               search && "px-2 w-full flex-1"
             }`}
           />

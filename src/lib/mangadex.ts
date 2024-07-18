@@ -29,7 +29,6 @@ export const getManga = async (id: string) => {
 };
 
 export const fetchMangaList = async (page = 1, listType: ITypeList) => {
-  console.log(page);
   try {
     const queryParams = new URLSearchParams({
       limit: page == 1 ? limitList.toString() : "5",

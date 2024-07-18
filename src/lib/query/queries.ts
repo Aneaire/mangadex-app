@@ -2,9 +2,15 @@ import { ITypeList } from "@/types/manga";
 import {
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
-import { fetchMangaList, searchManga } from "../mangadex";
+import {
+  fetchMangaList,
+  getCoverArt,
+  getManga,
+  searchManga,
+} from "../mangadex";
 
 export const useFetchMangaList = ({ type }: { type: ITypeList }) => {
   return useInfiniteQuery({
@@ -20,6 +26,27 @@ export const useFetchMangaList = ({ type }: { type: ITypeList }) => {
       return null; // No more pages to fetch
     },
     initialPageParam: 1, // Initial page param
+  });
+};
+
+export const useGetManga = (id: string) => {
+  return useQuery({
+    queryKey: ["manga", id],
+    queryFn: async () => {
+      const response = await getManga(id);
+      return response; // Ensure this returns the expected data structure
+    },
+  });
+};
+
+export const useGetCoverArt = (coverArtId: string, mangaId: string) => {
+  return useQuery({
+    queryKey: ["coverArt", coverArtId, mangaId],
+    queryFn: async () => {
+      const response = await getCoverArt(coverArtId, mangaId);
+      return response; // Ensure this returns the expected data structure
+    },
+    enabled: !!coverArtId && !!mangaId,
   });
 };
 

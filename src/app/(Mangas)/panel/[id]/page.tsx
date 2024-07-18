@@ -2,17 +2,21 @@
 
 import ChapterNav from "@/components/common/ChapterNav";
 import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
+import { useCupcakeContext } from "@/context/cookiesContext";
 import { getChapterPanels } from "@/lib/mangadex";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 const Panel = () => {
   const params = useParams();
   const router = useRouter();
   const { id } = params as { id: string };
+  const { addToReadedChapters } = useCupcakeContext();
+
+  const searchParams = useSearchParams();
+  const mangaId = searchParams.get("mangaId");
 
   const [panelList, setPanelList] = useState([]);
-
   useEffect(() => {
     let ignore = false;
 
@@ -22,7 +26,9 @@ const Panel = () => {
         setPanelList(data);
       }
     };
-
+    if (mangaId) {
+      addToReadedChapters(mangaId, id);
+    }
     fetchPanelList();
     return () => {
       ignore = true;

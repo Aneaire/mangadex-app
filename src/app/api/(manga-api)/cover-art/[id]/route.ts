@@ -23,9 +23,11 @@ export async function GET(
     const data = await getCoverInfo.json();
     const fileName = data.data.attributes.fileName;
 
-    const url = `${imageBaseUrl}/${mangaId}/${fileName}`;
+    const url = `${imageBaseUrl}/${mangaId}/${fileName}.256.jpg`;
 
-    const getImage = await fetch(url);
+    const getImage = await fetch(url, {
+      next: { revalidate: false },
+    });
 
     if (!getImage.ok) throw Error;
 

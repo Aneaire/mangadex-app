@@ -1,5 +1,7 @@
 import Header from "@/components/common/Header";
 import Search from "@/components/common/Search";
+import { Toaster } from "@/components/ui/toaster";
+import { CupCakeProvider } from "@/context/cookiesContext";
 import QueryProvider from "@/lib/query/QueryProvider";
 import type { Metadata } from "next";
 import { CookiesProvider } from "next-client-cookies/server";
@@ -27,13 +29,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} ${montserrat.className}`}>
         <CookiesProvider>
-          <Header />
-          {/* <Search /> */}
-          <main className=" md:px-5 mt-6 max-w-5xl mx-auto min-h-screen">
-            <QueryProvider>
-              {children} <Search />
-            </QueryProvider>
-          </main>
+          <CupCakeProvider>
+            <Header />
+            {/* <Search /> */}
+            <main className=" md:px-5 mt-2 max-w-5xl mx-auto min-h-screen">
+              <QueryProvider>
+                {children} <Search />
+              </QueryProvider>
+            </main>
+            <Toaster />
+          </CupCakeProvider>
         </CookiesProvider>
       </body>
     </html>

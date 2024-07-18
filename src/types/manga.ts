@@ -27,7 +27,7 @@ export type IRelationship = {
 }[];
 
 export type IChapters = {
-  attributes: { chapter: string };
+  attributes: { chapter: string; readableAt: string; title: string };
   id: string;
 };
 
