@@ -60,7 +60,6 @@ const ChapterList = ({ id }: { id: string }) => {
       setPage((prev) => prev + 1);
     }
   }, [inView]);
-  console.log(chapters);
 
   const displayedChapters = new Set();
 
@@ -77,7 +76,7 @@ const ChapterList = ({ id }: { id: string }) => {
         {filterDuplication
           ? chapters.map((chapter) => {
               const chapterNumber = chapter.attributes.chapter;
-              const isReaded = readedChapters(id).includes(chapterNumber);
+              const isReaded = readedChapters(id).includes(chapter.id);
 
               // Skip if the chapter number is already displayed
               if (displayedChapters.has(chapterNumber)) {

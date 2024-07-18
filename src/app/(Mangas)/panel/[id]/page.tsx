@@ -5,7 +5,7 @@ import ImageWithPlaceholder from "@/components/ImageWithPlaceholder";
 import { useCupcakeContext } from "@/context/cookiesContext";
 import { getChapterPanels } from "@/lib/mangadex";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const Panel = () => {
   const params = useParams();
@@ -42,9 +42,7 @@ const Panel = () => {
         <div className="w-full h-screen rounded-none bg-secondaryBackground animate-pulse flex items-center justify-center" />
       )}
       {panelList.map((url) => (
-        <Suspense key={url} fallback={<div>Loading...</div>}>
-          <ImageWithPlaceholder src={url} key={url} />
-        </Suspense>
+        <ImageWithPlaceholder src={url} key={url} />
       ))}
       <ChapterNav id={id} />
     </section>

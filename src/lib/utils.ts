@@ -48,3 +48,10 @@ export function formatDateToDDMMYY(dateString: string) {
   const year = String(date.getFullYear()).slice(-2);
   return `${day}/${month}/${year}`;
 }
+
+export function waitSeconds(seconds: number) {
+  const start = Date.now();
+  while (Date.now() - start < seconds * 1000) {
+    return true;
+  }
+}

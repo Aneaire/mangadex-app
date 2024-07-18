@@ -18,7 +18,7 @@ const Chapter = ({
     <div
       onClick={() => router.push(`/panel/${chapter.id}?mangaId=${mangaId}`)}
       key={chapter.id}
-      className={`flex justify-between rounded w-full cursor-pointer bg-chapter px-4 py-2 ${
+      className={`flex justify-between rounded w-full cursor-pointer bg-chapter px-4 gap-4 py-2 ${
         isReaded && "opacity-50"
       }`}
     >
@@ -28,7 +28,7 @@ const Chapter = ({
           {chapter.attributes.chapter ? chapter.attributes.chapter : "Unknown"}
         </p>
         <Separator orientation="vertical" className=" mx-2" />
-        <p>{chapter.attributes.title}</p>
+        <p className=" line-clamp-1">{chapter.attributes.title}</p>
       </span>
 
       <span className=" ml-auto">

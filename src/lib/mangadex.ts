@@ -65,10 +65,14 @@ export const searchManga = (query: string) => {
   }
 };
 
-export const getCoverArt = async (coverArtId: string, mangaId: string) => {
+export const getCoverArt = async (
+  coverArtId: string,
+  mangaId: string,
+  quality: "original" | "optimized"
+) => {
   try {
     const response = await fetch(
-      `/api/cover-art/${mangaId}?coverArtId=${coverArtId}`,
+      `/api/cover-art/${mangaId}?coverArtId=${coverArtId}&quality=${quality}`,
       {
         method: "GET",
         headers: {

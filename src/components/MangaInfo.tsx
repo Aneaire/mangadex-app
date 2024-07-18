@@ -1,5 +1,6 @@
 import { useCupcakeContext } from "@/context/cookiesContext";
 import { getCoverArt, getManga } from "@/lib/mangadex";
+import { useGetManga } from "@/lib/query/queries";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
 import { IMangaCard } from "@/types/manga";
 import { HeartHandshakeIcon, HeartPulseIcon } from "lucide-react";
@@ -15,11 +16,14 @@ const MangaInfo = ({ id }: { id: string }) => {
   const [toggleDesc, setToggleDesc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
+  const { data } = useGetManga(id);
+  console.log(data);
+
   useEffect(() => {
     getManga(id).then((data) => {
       setManga(data.data);
       const coverArtId = getCoverArtTypes(data.data)[0].id;
-      getCoverArt(coverArtId, id).then((data: any) => {
+      getCoverArt(coverArtId, id, "original").then((data: any) => {
         setImageUrl(data);
       });
     });

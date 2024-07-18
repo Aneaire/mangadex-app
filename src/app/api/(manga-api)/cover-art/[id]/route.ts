@@ -5,6 +5,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const coverArtId = request.nextUrl.searchParams.get("coverArtId");
+  const quality = request.nextUrl.searchParams.get("quality");
   const mangaId = params.id;
   const baseUrl = process.env.MANGADEX_BASE_URL;
   const imageBaseUrl = process.env.MANGADEX_COVER_ART_IMAGE_BASE_URL;
@@ -23,7 +24,9 @@ export async function GET(
     const data = await getCoverInfo.json();
     const fileName = data.data.attributes.fileName;
 
-    const url = `${imageBaseUrl}/${mangaId}/${fileName}.256.jpg`;
+    const url = `${imageBaseUrl}/${mangaId}/${fileName}${
+      quality === "original" ? "" : `.256.jpg`
+    }`;
 
     const getImage = await fetch(url, {
       next: { revalidate: false },

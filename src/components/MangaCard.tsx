@@ -23,7 +23,7 @@ const MangaCard = ({
   const setChapters = useMangaChapters((state) => state.setChapters);
 
   const fetchCoverArts = async () => {
-    getCoverArt(coverArt, id).then((data: any) => {
+    getCoverArt(coverArt, id, "optimized").then((data: any) => {
       setImageUrl(data);
     });
   };

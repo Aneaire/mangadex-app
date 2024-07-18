@@ -1,7 +1,6 @@
 import { useMangaChapters } from "@/lib/mangaStore";
 import { useGetCoverArt, useGetManga } from "@/lib/query/queries";
 import { getCoverArtTypes } from "@/lib/utils";
-import { IMangaCard } from "@/types/manga";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Badge } from "../ui/badge";
@@ -9,12 +8,16 @@ import { Badge } from "../ui/badge";
 const LibraryData = ({ id }: { id: string }) => {
   const router = useRouter();
   const setChapters = useMangaChapters((state) => state.setChapters);
-  const { data, isLoading, error } = useGetManga(id);
+  const { data: manga, isLoading, error } = useGetManga(id);
   const {
     data: imageUrl,
     isLoading: imageUrlLoading,
     error: imageUrlError,
-  } = useGetCoverArt(data ? getCoverArtTypes(data?.data)[0].id : "", id);
+  } = useGetCoverArt(
+    manga ? getCoverArtTypes(manga)[0].id : "",
+    id,
+    "optimized"
+  );
 
   if (isLoading) return <div></div>;
 
@@ -22,8 +25,6 @@ const LibraryData = ({ id }: { id: string }) => {
     router.push(`/manga/${id}`);
     setChapters([]);
   };
-
-  const manga: IMangaCard = data.data;
 
   return (
     <div
@@ -45,14 +46,14 @@ const LibraryData = ({ id }: { id: string }) => {
       </div>
       <div className="flex-1">
         <h2 className=" line-clamp-2 text-lg font-bold font-montserrat w-full">
-          {manga.attributes.title.en}
+          {manga?.attributes.title.en}
         </h2>
         <p className=" text-sm leading-4 line-clamp-2">
-          {manga.attributes.description.en}
+          {manga?.attributes.description.en}
         </p>
         <div className=" flex mt-2 gap-2">
-          <Badge variant={"outline"}>{manga.attributes.year}</Badge>
-          <Badge variant={"accent"}>{manga.attributes.status}</Badge>
+          <Badge variant={"outline"}>{manga?.attributes.year}</Badge>
+          <Badge variant={"accent"}>{manga?.attributes.status}</Badge>
         </div>
       </div>
     </div>

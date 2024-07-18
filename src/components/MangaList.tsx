@@ -11,14 +11,9 @@ import NoDataPlaceholder from "./common/NoDataPlaceholder";
 import { Button } from "./ui/button";
 import { Carousel, CarouselContent } from "./ui/carousel";
 
-const MangaList = ({ type }: { type: ITypeList }) => {
+const MangaList = ({ type, heading }: { type: ITypeList; heading: string }) => {
   const [seeMore, setSeeMore] = useState(false);
   const [ref, inView] = useInView();
-
-  const heading =
-    type === "trending"
-      ? `Trending In  in ${new Date().getFullYear()}`
-      : "New Releases";
 
   const { data, isLoading, error, fetchNextPage } = useFetchMangaList({ type });
 
@@ -31,7 +26,7 @@ const MangaList = ({ type }: { type: ITypeList }) => {
 
   if (isLoading) return <></>;
   return (
-    <div className="  py-1 relative">
+    <div className=" relative">
       <h5 className=" font-medium font-montserrat pb-2 w-full flex justify-between items-center">
         <span>{heading}</span>{" "}
         <Button onClick={handleSeeMore} className="">

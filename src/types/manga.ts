@@ -37,4 +37,10 @@ export type IResponseToClient = {
   message: "Successfully fetched data" | "Error fetching data";
 };
 
-export type ITypeList = "trending" | "new releases";
+export type ITypeList =
+  | "trending"
+  | "new releases"
+  | "complete"
+  | "romance"
+  | "action"
+  | "ecchi";

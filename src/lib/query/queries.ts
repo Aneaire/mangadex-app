@@ -1,4 +1,4 @@
-import { ITypeList } from "@/types/manga";
+import { IMangaCard, ITypeList } from "@/types/manga";
 import {
   useInfiniteQuery,
   useMutation,
@@ -35,16 +35,20 @@ export const useGetManga = (id: string) => {
     queryKey: ["manga", id],
     queryFn: async () => {
       const response = await getManga(id);
-      return response; // Ensure this returns the expected data structure
+      return response.data as IMangaCard; // Ensure this returns the expected data structure
     },
   });
 };
 
-export const useGetCoverArt = (coverArtId: string, mangaId: string) => {
+export const useGetCoverArt = (
+  coverArtId: string,
+  mangaId: string,
+  quality: "original" | "optimized"
+) => {
   return useQuery({
     queryKey: ["coverArt", coverArtId, mangaId],
     queryFn: async () => {
-      const response = await getCoverArt(coverArtId, mangaId);
+      const response = await getCoverArt(coverArtId, mangaId, quality);
       return response; // Ensure this returns the expected data structure
     },
     enabled: !!coverArtId && !!mangaId,
