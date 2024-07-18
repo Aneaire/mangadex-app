@@ -83,15 +83,10 @@ export const getCoverArt = async (coverArtId: string, mangaId: string) => {
       return null;
     }
 
-    const data = await response.json();
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
 
-    // const imageBuffer = await response.arrayBuffer();
-    // const base64Image = `data:image/jpeg;base64,${Buffer.from(
-    //   imageBuffer
-    // ).toString("base64")}`;
-    // console.log(data);
-    return data;
-    // return base64Image;
+    return objectUrl;
   } catch (error) {
     console.error("Error fetching cover art details:", error);
     return null;

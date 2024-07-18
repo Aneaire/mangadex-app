@@ -14,6 +14,7 @@ export async function GET(
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.MANGADEX_API_KEY}`,
       },
     });
 
@@ -24,22 +25,19 @@ export async function GET(
 
     const url = `${imageBaseUrl}/${mangaId}/${fileName}`;
 
-    // const getImage = await fetch(url, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: `Bearer ${process.env.MANGADEX_API_KEY}`,
-    //   },
-    // });
+    const getImage = await fetch(url);
 
-    // if (!getImage.ok) throw Error;
+    if (!getImage.ok) throw Error;
 
-    // const imageData = await getImage.json();
+    const imageData = await getImage.arrayBuffer();
 
-    return NextResponse.json({
-      status: "success",
-      data: data,
-      imageUrl: url,
+    if (!imageData) throw Error;
+
+    return new NextResponse(imageData, {
+      headers: {
+        "Content-Type": getImage.headers.get("content-type")!,
+        "Content-Length": getImage.headers.get("content-length")!,
+      },
     });
   } catch (error) {
     return NextResponse.json({
