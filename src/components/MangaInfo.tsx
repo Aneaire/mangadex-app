@@ -1,8 +1,7 @@
 import { useCupcakeContext } from "@/context/cookiesContext";
-import { getCoverArt, getManga } from "@/lib/mangadex";
+import { getCoverArt } from "@/lib/mangadex";
 import { useGetManga } from "@/lib/query/queries";
 import { getCoverArtTypes, getTitle } from "@/lib/utils";
-import { IMangaCard } from "@/types/manga";
 import { HeartHandshakeIcon, HeartPulseIcon } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -10,24 +9,20 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 
 const MangaInfo = ({ id }: { id: string }) => {
-  const [manga, setManga] = useState<IMangaCard>();
   const { library, saveToLibrary, removeToLibrary } = useCupcakeContext();
 
   const [toggleDesc, setToggleDesc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
-  const { data } = useGetManga(id);
-  console.log(data);
+  const { data: manga } = useGetManga(id);
 
   useEffect(() => {
-    getManga(id).then((data) => {
-      setManga(data.data);
-      const coverArtId = getCoverArtTypes(data.data)[0].id;
-      getCoverArt(coverArtId, id, "original").then((data: any) => {
-        setImageUrl(data);
-      });
+    if (!manga) return;
+    const coverArtId = getCoverArtTypes(manga)[0].id;
+    getCoverArt(coverArtId, id, "original").then((data: any) => {
+      setImageUrl(data);
     });
-  }, [id]);
+  }, [manga]);
 
   const saved = library.includes(id);
 
