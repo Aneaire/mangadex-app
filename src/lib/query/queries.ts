@@ -9,6 +9,7 @@ import {
   fetchMangaList,
   getCoverArt,
   getManga,
+  getPanelImage,
   searchManga,
 } from "../mangadex";
 
@@ -57,6 +58,16 @@ export const useSearchManga = () => {
     mutationKey: ["searchManga"],
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["mangaList"] });
+    },
+  });
+};
+
+export const useGetPanelImage = (url: string) => {
+  return useQuery({
+    queryKey: ["panelImage", url],
+    queryFn: async () => {
+      const response = await getPanelImage(url);
+      return response; // Ensure this returns the expected data structure
     },
   });
 };

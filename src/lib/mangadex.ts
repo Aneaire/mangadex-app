@@ -135,7 +135,6 @@ export const getChapterPanels = async (chapterId: string) => {
     });
 
     const data = await response.json();
-    console.log(data.data.chapter);
 
     if (!response.ok) {
       throw new Error(data.error || "Error fetching chapter pages");
@@ -147,6 +146,23 @@ export const getChapterPanels = async (chapterId: string) => {
   } catch (error) {
     console.error("Error fetching chapter pages:", error);
     return [];
+  }
+};
+
+export const getPanelImage = async (url: string) => {
+  try {
+    const response = await fetch(`/api/panels/image?url=${url}`);
+    if (!response.ok) {
+      console.error("Error fetching image:", response.statusText);
+      return null;
+    }
+
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    return objectUrl;
+  } catch (error) {
+    console.error("Error fetching panel image:", error);
+    return null;
   }
 };
 
