@@ -16,6 +16,9 @@ const Panel = ({
   const { data: panelList } = useGetChapterPanels(chapterId);
   const [visiblePanels, setVisiblePanels] = useState<string[]>([]);
   const [ref, inView] = useInView();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [mangaId]);
 
   const chunkSize = 10; // Number of panels to load initially and per chunk
 
