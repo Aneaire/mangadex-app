@@ -8,7 +8,13 @@ import Chapter from "./Chapter";
 import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 
-const ChapterList = ({ id }: { id: string }) => {
+const ChapterList = ({
+  id,
+  setCurrentSelectedChapter,
+}: {
+  id: string;
+  setCurrentSelectedChapter: (id: string) => void;
+}) => {
   const { ref, inView } = useInView({
     /* Optional options */
     threshold: 0,
@@ -22,8 +28,6 @@ const ChapterList = ({ id }: { id: string }) => {
   const [noMorePage, setNoMorePage] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [filterDuplication, setFilterDuplication] = useState(false);
-
-  console.log(readedChapters(id));
 
   useEffect(() => {
     let ignore = false;
@@ -88,6 +92,7 @@ const ChapterList = ({ id }: { id: string }) => {
 
               return (
                 <Chapter
+                  setCurrentSelectedChapter={setCurrentSelectedChapter}
                   isReaded={isReaded}
                   mangaId={id}
                   key={chapter.id}
@@ -103,6 +108,7 @@ const ChapterList = ({ id }: { id: string }) => {
                   mangaId={id}
                   key={chapter.id}
                   chapter={chapter}
+                  setCurrentSelectedChapter={setCurrentSelectedChapter}
                 />
               );
             })}

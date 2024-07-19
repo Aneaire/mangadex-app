@@ -1,22 +1,23 @@
 import { formatDateToDDMMYY } from "@/lib/utils";
 import { IChapters } from "@/types/manga";
-import { useRouter } from "next/navigation";
 import { Separator } from "./ui/separator";
 
 const Chapter = ({
   chapter,
   mangaId,
   isReaded,
+  setCurrentSelectedChapter,
 }: {
   chapter: IChapters;
   mangaId: string;
   isReaded: boolean;
+  setCurrentSelectedChapter: (chapterId: string) => void;
 }) => {
-  const router = useRouter();
-  console.log(isReaded);
   return (
     <div
-      onClick={() => router.push(`/panel/${chapter.id}?mangaId=${mangaId}`)}
+      onClick={() => {
+        setCurrentSelectedChapter(chapter.id);
+      }}
       key={chapter.id}
       className={`flex justify-between rounded w-full cursor-pointer bg-chapter px-4 gap-4 py-2 ${
         isReaded && "opacity-50"

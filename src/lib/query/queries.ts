@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-query";
 import {
   fetchMangaList,
+  getChapterPanels,
   getCoverArt,
   getManga,
   getPanelImage,
@@ -67,6 +68,16 @@ export const useSearchManga = () => {
   });
 };
 
+export const useGetChapterPanels = (id: string) => {
+  return useQuery({
+    queryKey: ["chapterPanels", id],
+    queryFn: async () => {
+      const response = await getChapterPanels(id);
+      return response; // Ensure this returns the expected data structure
+    },
+  });
+};
+
 export const useGetPanelImage = (url: string) => {
   return useQuery({
     queryKey: ["panelImage", url],
@@ -74,6 +85,7 @@ export const useGetPanelImage = (url: string) => {
       const response = await getPanelImage(url);
       return response; // Ensure this returns the expected data structure
     },
+    enabled: !!url,
   });
 };
 

@@ -1,9 +1,7 @@
 import { useGetPanelImage } from "@/lib/query/queries";
 import Image from "next/image";
-import { useState } from "react";
 
 const ImageWithPlaceholder = ({ src }: { src: string }) => {
-  const [loading, setLoading] = useState(true);
   const { data } = useGetPanelImage(src);
   return (
     <div className="relative w-full">
@@ -22,7 +20,7 @@ const ImageWithPlaceholder = ({ src }: { src: string }) => {
           className={`w-full flex-shrink-0 transition-opacity duration-500`}
           src={data}
           alt="panel"
-          sizes="100vw"
+          sizes="50vw"
           quality={100}
           loading="lazy"
         />
