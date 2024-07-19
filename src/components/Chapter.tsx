@@ -1,3 +1,4 @@
+import { useMangaChapters } from "@/lib/mangaStore";
 import { formatDateToDDMMYY } from "@/lib/utils";
 import { IChapters } from "@/types/manga";
 import { Separator } from "./ui/separator";
@@ -6,13 +7,14 @@ const Chapter = ({
   chapter,
   mangaId,
   isReaded,
-  setCurrentSelectedChapter,
 }: {
   chapter: IChapters;
   mangaId: string;
   isReaded: boolean;
-  setCurrentSelectedChapter: (chapterId: string) => void;
 }) => {
+  const setCurrentSelectedChapter = useMangaChapters(
+    (state) => state.setSelectedChapter
+  );
   return (
     <div
       onClick={() => {

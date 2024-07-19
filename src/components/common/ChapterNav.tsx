@@ -7,6 +7,9 @@ import { Button } from "../ui/button";
 
 const ChapterNav = ({ id }: { id: string }) => {
   const chapters = useMangaChapters((state) => state.chapters);
+  const setSelectedChapter = useMangaChapters(
+    (state) => state.setSelectedChapter
+  );
   const router = useRouter();
 
   const [indices, setIndices] = useState<{
@@ -17,17 +20,16 @@ const ChapterNav = ({ id }: { id: string }) => {
   useMemo(() => {
     const { previousIndex, nextIndex } = findIndices(chapters, id);
     setIndices({ previousIndex, nextIndex });
-    console.log({ previousIndex, nextIndex });
   }, [chapters, id]);
 
   const handlePrevBtn = () => {
     if (indices.previousIndex === null) return;
-    router.replace(`/panel/${chapters[indices.previousIndex].id}`);
+    setSelectedChapter(chapters[indices.previousIndex].id);
   };
 
   const handleNextBtn = () => {
     if (indices.nextIndex === null) return;
-    router.replace(`/panel/${chapters[indices.nextIndex].id}`);
+    setSelectedChapter(chapters[indices.nextIndex].id);
   };
 
   return (

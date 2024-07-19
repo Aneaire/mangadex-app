@@ -3,13 +3,18 @@
 import ChapterList from "@/components/ChapterList";
 import MangaInfo from "@/components/MangaInfo";
 import Panel from "@/components/panels/Panel";
+import { useMangaChapters } from "@/lib/mangaStore";
 import { useParams } from "next/navigation";
-import { useState } from "react";
 
 const Manga = () => {
   const params = useParams();
   const { id } = params as { id: string };
-  const [currentSelectedChapter, setCurrentSelectedChapter] = useState("");
+  const currentSelectedChapter = useMangaChapters(
+    (state) => state.selectedChapter
+  );
+
+  const sel = useMangaChapters((state) => state.selectedChapter);
+  console.log(sel);
 
   return (
     <section className=" w-full px-1 lg:px-3">
@@ -17,10 +22,7 @@ const Manga = () => {
       {!currentSelectedChapter ? (
         <>
           <MangaInfo id={id} />
-          <ChapterList
-            id={id}
-            setCurrentSelectedChapter={setCurrentSelectedChapter}
-          />
+          <ChapterList id={id} />
         </>
       ) : (
         <Panel mangaId={id} chapterId={currentSelectedChapter} />

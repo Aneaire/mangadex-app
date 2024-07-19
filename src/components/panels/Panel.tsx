@@ -1,9 +1,12 @@
 import { useCupcakeContext } from "@/context/cookiesContext";
+import { useMangaChapters } from "@/lib/mangaStore";
 import { useGetChapterPanels } from "@/lib/query/queries";
+import { XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import ChapterNav from "../common/ChapterNav";
 import ImageWithPlaceholder from "../ImageWithPlaceholder";
+import { Button } from "../ui/button";
 
 const Panel = ({
   mangaId,
@@ -14,6 +17,10 @@ const Panel = ({
 }) => {
   const { addToReadedChapters } = useCupcakeContext();
   const { data: panelList } = useGetChapterPanels(chapterId);
+  const setSelectedChapter = useMangaChapters(
+    (state) => state.setSelectedChapter
+  );
+
   const [visiblePanels, setVisiblePanels] = useState<string[]>([]);
   const [ref, inView] = useInView();
   useEffect(() => {
@@ -47,7 +54,13 @@ const Panel = ({
   }, [inView]);
 
   return (
-    <section className="scroll-smooth bg-secondaryBackground relative w-full">
+    <section className=" scroll-smooth bg-secondaryBackground relative w-full">
+      <Button
+        onClick={() => setSelectedChapter("")}
+        className=" px-2 py-0 top-2 right-2 absolute w-fit "
+      >
+        <XIcon className="" size={24} />
+      </Button>
       <ChapterNav id={chapterId} />
       {!panelList && (
         <div className="w-full h-screen rounded-none bg-secondaryBackground animate-pulse flex items-center justify-center" />

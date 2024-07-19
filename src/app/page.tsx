@@ -3,11 +3,20 @@
 import MangaList from "@/components/MangaList";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
+import { useMangaChapters } from "@/lib/mangaStore";
 import { Clock, LibrarySquare } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Home = () => {
   const router = useRouter();
+  const setSelectedChapter = useMangaChapters(
+    (state) => state.setSelectedChapter
+  );
+  useEffect(() => {
+    setSelectedChapter("");
+  }, []);
+
   return (
     <main className=" w-full min-h-screen flex gap-5 flex-col px-1.5 lg:px-5 ">
       {/* <TestApi /> */}

@@ -8,13 +8,7 @@ import Chapter from "./Chapter";
 import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 
-const ChapterList = ({
-  id,
-  setCurrentSelectedChapter,
-}: {
-  id: string;
-  setCurrentSelectedChapter: (id: string) => void;
-}) => {
+const ChapterList = ({ id }: { id: string }) => {
   const { ref, inView } = useInView({
     /* Optional options */
     threshold: 0,
@@ -92,7 +86,6 @@ const ChapterList = ({
 
               return (
                 <Chapter
-                  setCurrentSelectedChapter={setCurrentSelectedChapter}
                   isReaded={isReaded}
                   mangaId={id}
                   key={chapter.id}
@@ -108,7 +101,6 @@ const ChapterList = ({
                   mangaId={id}
                   key={chapter.id}
                   chapter={chapter}
-                  setCurrentSelectedChapter={setCurrentSelectedChapter}
                 />
               );
             })}
