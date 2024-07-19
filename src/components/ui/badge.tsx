@@ -27,7 +27,7 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 function Badge({
-  className = "border-[1px] border-white/30 text-[12px]",
+  className = "border-[1px] font-montserrat font-regular border-white/30 text-[12px]",
   variant,
   ...props
 }: BadgeProps) {

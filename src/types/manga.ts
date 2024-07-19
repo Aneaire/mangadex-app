@@ -13,6 +13,11 @@ export type IMangaCard = {
     updatedAt: string;
     year: number;
     status: "ongoing" | "completed" | "hiatus";
+    tags: {
+      id: string;
+      type: string;
+      attributes: { name: { en: string } };
+    }[];
   };
   latestChapter: string;
   relationships: {

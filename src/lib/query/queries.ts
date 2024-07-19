@@ -52,6 +52,7 @@ export const useGetCoverArt = (
       return response; // Ensure this returns the expected data structure
     },
     enabled: !!coverArtId && !!mangaId,
+    gcTime: 5 * 60 * 1000,
   });
 };
 
