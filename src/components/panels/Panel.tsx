@@ -51,11 +51,7 @@ const Panel = ({
       )}
       {visiblePanels &&
         visiblePanels.map((url: string, index: number) => (
-          <div
-            className=" min-h-[400px]"
-            key={url}
-            ref={index === visiblePanels.length - 1 ? ref : null}
-          >
+          <div key={url} ref={index === visiblePanels.length - 1 ? ref : null}>
             <ImageWithPlaceholder src={url} />
           </div>
         ))}
