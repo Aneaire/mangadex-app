@@ -51,7 +51,9 @@ const MangaInfo = ({ id }: { id: string }) => {
           {getTitle(manga.attributes.title)}
         </h2>
         <p
-          className={`${toggleDesc ? "" : "line-clamp-5"} font-light`}
+          className={` break-all ${
+            toggleDesc ? "" : "line-clamp-5"
+          } font-light`}
           onClick={() => setToggleDesc(!toggleDesc)}
         >
           {manga.attributes.description.en}

@@ -77,7 +77,7 @@ const MangaLongCard = ({
           <Badge variant="outline">yr : {year}</Badge>
         </span>
 
-        <p className=" line-clamp-3 mt-2">{desc}</p>
+        <p className=" line-clamp-3 break-all">{desc}</p>
       </div>
     </div>
   );

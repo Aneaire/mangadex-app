@@ -48,7 +48,7 @@ const LibraryData = ({ id }: { id: string }) => {
         <h2 className=" line-clamp-2 text-lg font-bold font-montserrat w-full">
           {manga?.attributes.title.en}
         </h2>
-        <p className=" text-sm leading-4 line-clamp-2">
+        <p className=" text-sm leading-4 line-clamp-2 break-all mr-2 lg:mr-5">
           {manga?.attributes.description.en}
         </p>
         <div className=" flex mt-2 gap-2">

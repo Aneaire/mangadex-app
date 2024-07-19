@@ -40,7 +40,7 @@ const GridMangaCard = ({
   return (
     <div
       onClick={handleClick}
-      className="bg-card cursor-pointer text-foreground rounded w-full sm:w-5/6 p-2 transition-all hover:bg-secondaryBackground hover:rotate-12 hover:scale-110"
+      className="bg-card cursor-pointer text-foreground rounded w-full sm:w-5/6 p-2 transition-all hover:bg-secondaryBackground hover:-rotate-2"
     >
       <div className="relative w-full aspect-[9/12] rounded overflow-hidden">
         {imageUrl && (

@@ -70,7 +70,12 @@ export async function GET(request: Request) {
         },
         next: {
           tags: [listType],
-          revalidate: listType === "trending" || "complete" ? 604800 : 3600,
+          revalidate:
+            listType === "trending" || "complete"
+              ? 604800
+              : listType === "new releases"
+              ? 3600
+              : 86400,
         },
       }
     );

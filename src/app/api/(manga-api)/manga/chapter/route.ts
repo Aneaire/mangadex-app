@@ -17,8 +17,8 @@ export async function GET(request: NextRequest) {
       offset: offset,
       "order[volume]": "desc",
       "order[chapter]": "desc",
-      "order[readableAt]": "desc",
-      "order[updatedAt]": "desc",
+      // "order[readableAt]": "desc",
+      // "order[updatedAt]": "desc",
       "order[createdAt]": "desc",
       "translatedLanguage[]": "en",
     });
