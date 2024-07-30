@@ -1,10 +1,8 @@
 "use client";
 
 import { getCoverArt } from "@/lib/mangadex";
-import { useMangaChapters } from "@/lib/mangaStore";
 import { getTitle } from "@/lib/utils";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import OpenManga from "./common/OpenManga";
 
@@ -19,15 +17,7 @@ const MangaCard = ({
   chapters: string;
   id: string;
 }) => {
-  const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
-  const setChapters = useMangaChapters((state) => state.setChapters);
-  const recentClickedManga = useMangaChapters(
-    (state) => state.recentClickedManga
-  );
-  const setRecentClickedManga = useMangaChapters(
-    (state) => state.setRecentClickedManga
-  );
 
   const fetchCoverArts = async () => {
     getCoverArt(coverArt, id, "optimized").then((data: any) => {

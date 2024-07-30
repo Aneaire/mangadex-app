@@ -5,7 +5,6 @@ import { LoaderPinwheelIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import Chapter from "./Chapter";
-import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 
 const ChapterList = ({ id }: { id: string }) => {
@@ -105,20 +104,9 @@ const ChapterList = ({ id }: { id: string }) => {
               );
             })}
       </div>
-      {!showMore ? (
-        <Button
-          className={`bg-secondaryBackground`}
-          onClick={() => setShowMore(true)}
-        >
-          Show More
-        </Button>
-      ) : (
-        !noMorePage && (
-          <LoaderPinwheelIcon
-            ref={ref}
-            className=" animate-spin size-10 my-5"
-          />
-        )
+
+      {!noMorePage && (
+        <LoaderPinwheelIcon ref={ref} className=" animate-spin size-10 my-5" />
       )}
     </section>
   );

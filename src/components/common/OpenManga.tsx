@@ -23,10 +23,10 @@ const OpenManga = ({
 
   const handleClick = () => {
     router.push(`/manga/${id}`);
+    setSelectedChapter("");
     if (recentClickedManga !== id) {
       setChapters([]);
       setRecentClickedManga(id);
-      setSelectedChapter("");
     }
   };
 
